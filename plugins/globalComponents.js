@@ -1,5 +1,7 @@
 import Vue from 'vue'
 import BaseInput from '@/components/Inputs/BaseInput.vue';
+import BaseTextArea from '@/components/Inputs/BaseTextArea';
+import BaseRadio from '~/components/Inputs/BaseRadio.vue';
 import BaseDropdown from '@/components/BaseDropdown.vue';
 import Card from '@/components/Cards/Card.vue';
 import BaseButton from '@/components/BaseButton.vue';
@@ -16,5 +18,7 @@ Vue.component(BaseCheckbox.name, BaseCheckbox);
 Vue.component(BaseButton.name, BaseButton);
 Vue.component(Input.name, Input);
 Vue.component(InputNumber.name, InputNumber);
+Vue.component(BaseTextArea.name, BaseTextArea);
+Vue.component(BaseRadio.name, BaseRadio);
 Vue.use(Tooltip);
 Vue.use(Popover);
