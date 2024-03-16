@@ -8,11 +8,12 @@
         :id="cbId"
         class="form-check-input"
         type="radio"
+        :name="groupName"
         :disabled="disabled"
         :value="name"
         v-model="model"
       />
-      <slot></slot> <span class="form-check-sign"></span>
+      <span class="form-check-sign"> {{ name }}</span>
     </label>
   </div>
 </template>
@@ -35,6 +36,10 @@ export default {
     inline: {
       type: Boolean,
       description: 'Whether radio is inline'
+    },
+    groupName: {
+      type: String,
+      description: 'GroupName'
     }
   },
   data() {
