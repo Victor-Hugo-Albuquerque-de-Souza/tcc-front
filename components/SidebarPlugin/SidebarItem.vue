@@ -31,6 +31,9 @@
           <span class="sidebar-normal">{{ link.name }}</span>
         </template>
         <template v-else>
+          <slot
+            name="svgIcon"
+          />
           <i :class="link.icon"></i>
           <p>{{ link.name }}</p>
         </template>
