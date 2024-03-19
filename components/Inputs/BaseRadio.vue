@@ -10,10 +10,10 @@
         type="radio"
         :name="groupName"
         :disabled="disabled"
-        :value="name"
+        :value="value"
         v-model="model"
       />
-      <span class="form-check-sign"> {{ name }}</span>
+      <span class="form-check-sign"> {{ label }}</span>
     </label>
   </div>
 </template>
@@ -32,6 +32,10 @@ export default {
     value: {
       type: [String, Boolean],
       description: 'Radio value'
+    },
+    label:{
+      type: String,
+      default:""
     },
     inline: {
       type: Boolean,
@@ -53,6 +57,7 @@ export default {
         return this.value;
       },
       set(value) {
+        console.log('aui')
         this.$emit('input', value);
       }
     },

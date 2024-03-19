@@ -8,7 +8,7 @@ const initialState = {
         availability:false,
         featured:false,
         customAttributes:{
-            cores:"",
+            colors:"",
             size:"",
             manufacturingDate:"",
             lotNumber:"",
@@ -17,7 +17,8 @@ const initialState = {
         dimensions:{
             height:"",
             width:"",
-            depth:""
+            depth:"",
+            weight:""
         },
         brand:{
             name:"",

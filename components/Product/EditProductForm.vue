@@ -4,7 +4,7 @@
     <h5 slot="header" class="title">{{ getTitle }}</h5>
     <!-- FORM: -->
     <form @submit.prevent="updateProduct">
-        <!-- 1ST ROW: NAME -->
+        <!-- 1st ROW: NAME AND BRAND -->
         <div class="row">
             <div class="col-md-7">
                 <base-input
@@ -16,16 +16,33 @@
                 </base-input>
             </div>
             <div class="col-md-5">
-                <base-input
-                    type="text"
+                <base-select
                     label="Fabricante:"
-                    placeholder=""
-                    v-model="name"
                 >
-                </base-input>
+                    <template #options>
+                        <option value="teste1">Teste 1</option>
+                        <option value="teste2">Teste 2</option>
+                        <option value="teste3">Teste 3</option>
+                    </template>
+                </base-select>
             </div>
         </div>
-        <!-- 2ND ROW: PRICE, PROFIT AND FINAL PRICE -->
+        <!-- 2nd ROW: CATEGORY -->
+        <div class="row">
+            <div class="col-md-12">
+                <base-select
+                    label="Categoria:"
+                    v-model="category"
+                >
+                    <template #options>
+                        <option value="teste1">Teste 1</option>
+                        <option value="teste2">Teste 2</option>
+                        <option value="teste3">Teste 3</option>
+                    </template>
+                </base-select>
+            </div>
+        </div>
+        <!-- 3rd ROW: PRICE, PROFIT AND FINAL PRICE -->
         <div class="row">
             <div class="col-md-4">
                 <base-input
@@ -55,7 +72,7 @@
                 </base-input>
             </div>
         </div>
-        <!-- 3RD ROW: DESCRIPTION -->
+        <!-- 4th ROW: DESCRIPTION -->
         <div class="row">
             <div class="col-md-12">
                 <base-text-area
@@ -67,7 +84,7 @@
                 </base-text-area>
             </div>
         </div>
-        <!-- 4TH ROW:HAS CUSTOM ATTRIBUTES CONTROLLER -->
+        <!-- 5th ROW: RADIO BUTTONS - HAS CUSTOM ATTRIBUTES CONTROLLER -->
         <div class="row py-3">
             <div class="row col-md-12">
                 <span class="col-md-12"> Tem atributos personalizáveis?</span>
@@ -76,76 +93,154 @@
                 <div class="col-md-6">
                     <base-radio
                         groupName="hasCustomAttributes"
-                        name="Sim"
-                        value="hasCustomAttributes"
+                        name="yes"
+                        :value="true"
+                        label="Sim"
+                        @input="(value) => fieldsetControllers.customAttributes = value"
                     >
                     </base-radio>
                 </div>
                 <div class="col-md-6">
                     <base-radio
                         groupName="hasCustomAttributes"
-                        name="Não"
-                        value="hasCustomAttributes"
+                        name="no"
+                        :value="false"
+                        label="Não"
+                        @input="(value) => fieldsetControllers.customAttributes = value"
                     >
                     </base-radio>
                 </div>
             </div>
         </div>
-        <!-- 5TH ROW: CUSTOM ATTRIBUTES -->
-        <div class="row">
-            
-        </div>
-        <!-- <div class="row">
-            <div class="col-md-12">
-            <base-input
-                type="text"
-                label="Address"
-                placeholder="Home Address"
-                v-model="user.address"
-            >
-            </base-input>
-            </div>
-        </div> -->
-        <!-- <div class="row">
-            <div class="col-md-4">
-            <base-input
-                type="text"
-                label="City"
-                placeholder="City"
-                v-model="user.city"
-            >
-            </base-input>
-            </div>
-            <div class="col-md-4">
-            <base-input
-                type="text"
-                label="Country"
-                placeholder="Country"
-                v-model="user.country"
-            >
-            </base-input>
-            </div>
-            <div class="col-md-4">
-            <base-input
-                label="Postal Code"
-                placeholder="ZIP Code"
-                v-model="user.postalCode"
-            >
-            </base-input>
-            </div>
-        </div> -->
-        <!-- <div class="row">
-            <div class="col-md-12">
-            <base-input label="About Me">
-                <textarea
-                class="form-control"
-                placeholder="ZIP Code"
-                v-model="user.aboutMe"
+        <!-- 6th ROW: CUSTOM ATTRIBUTES - COLORS AND SIZE-->
+        <div v-if="fieldsetControllers.customAttributes" class="row">
+            <div class="col-md-6">
+                <base-select
+                    label="Cores:"
+
                 >
-                </textarea>
-            </base-input>
+                    <template #options>
+                        <option value="teste1">Teste 1</option>
+                        <option value="teste2">Teste 2</option>
+                        <option value="teste3">Teste 3</option>
+                    </template>
+                </base-select>
             </div>
-        </div> -->
+            <div class="col-md-6">
+                <base-input
+                    type="text"
+                    label="Tamanho:"
+                    placeholder=""
+                    v-model="size"
+                >
+                </base-input>
+            </div>
+        </div>
+        <!-- 7th ROW: CUSTOM ATTRIBUTES - MANUFACTURING DATE, LOT NUMBER AND VOLTS -->
+        <div v-if="fieldsetControllers.customAttributes" class="row">
+            <div class="col-md-4">
+                <base-input
+                    type="text"
+                    label="Fabricação:"
+                    placeholder=""
+                    v-model="manufacturingDate"
+                >
+                </base-input>
+            </div>
+            <div class="col-md-4">
+                <base-input
+                    type="text"
+                    label="Lote:"
+                    placeholder=""
+                    v-model="lotNumber"
+                >
+                </base-input>
+            </div>
+            <div class="col-md-4">
+                <base-input
+                    type="text"
+                    label="Voltagem:"
+                    placeholder=""
+                    v-model="volts"
+                >
+                </base-input>
+            </div>
+        </div>
+        <!-- 8th ROW: RADIO BUTTONS - HAS DIMENSIONS CONTROLLER -->
+        <div class="row py-3">
+            <div class="row col-md-12">
+                <span class="col-md-12"> Adicionar dimensões?</span>
+            </div>
+            <div class="row col-md-12">
+                <div class="col-md-6">
+                    <base-radio
+                        groupName="hasDimensions"
+                        name="yes"
+                        :value="true"
+                        label="Sim"
+                        @input="(value) => fieldsetControllers.dimensions = value"
+                    >
+                    </base-radio>
+                </div>
+                <div class="col-md-6">
+                    <base-radio
+                        groupName="hasDimensions"
+                        name="no"
+                        :value="false"
+                        label="Não"
+                        @input="(value) => fieldsetControllers.dimensions = value"
+                    >
+                    </base-radio>
+                </div>
+            </div>
+        </div>
+        <!-- 9th ROW: DIMENSIONS - HEIGHT, WIDTH AND DEPTH -->
+        <div v-if="fieldsetControllers.dimensions" class="row">
+            <div class="col-md-3">
+                <base-input
+                    type="text"
+                    label="Altura:"
+                    placeholder="cm"
+                    v-model="height"
+                >
+                </base-input>
+            </div>
+            <div class="col-md-3">
+                <base-input
+                    type="text"
+                    label="Largura:"
+                    placeholder="cm"
+                    v-model="width"
+                >
+                </base-input>
+            </div>
+            <div class="col-md-3">
+                <base-input
+                    type="text"
+                    label="Profundidade:"
+                    placeholder="depth"
+                    v-model="depth"
+                >
+                </base-input>
+            </div>
+            <div class="col-md-3">
+                <base-input
+                    type="text"
+                    label="weight"
+                    placeholder="depth"
+                    v-model="weight"
+                >
+                </base-input>
+            </div>
+        </div>
+        <!-- 10th ROW: TAGS MULTISELECT -->
+        <div class="row">
+            <div class="col-md-12">
+                <multiselect
+                    label="Tags"
+                ></multiselect>
+            </div>
+        </div>
         <base-button native-type="submit" type="primary" class="btn-fill">
             Save
         </base-button>
@@ -156,10 +251,15 @@
 export default {
 data() {
     return {
+        fieldsetControllers:{
+            customAttributes:false,
+            dimensions:false
+        },
         repository:{
             brands:[],
             tags:[]
-        }
+        },
+        category:""
     };
 },
 props:{
@@ -189,6 +289,14 @@ computed:{
 
         }
     },
+    // category:{
+    //     get(){
+
+    //     },
+    //     set(){
+
+    //     }
+    // },
     description:{
         get(){
 
@@ -337,4 +445,3 @@ computed:{
 }
 };
 </script>
-<style></style>
