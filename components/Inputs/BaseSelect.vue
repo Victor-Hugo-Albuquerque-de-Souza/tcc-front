@@ -20,13 +20,13 @@
     </slot>
     <slot>
         <select
-        :value="value"
-        v-bind="$attrs"
-        v-on="listeners"
-        class="form-control"
-        aria-describedby="addon-right addon-left"
+            :value="value"
+            v-bind="$attrs"
+            v-on="listeners"
+            class="form-control"
+            aria-describedby="addon-right addon-left"
         >
-        <slot name="options"></slot>
+            <slot name="options"></slot>
         </select>
     </slot>
     <slot name="addonRight">
