@@ -75,6 +75,44 @@
   color:white;
 }
 
+.bg-pink-primary{
+  background-color: rgb(225, 78, 202);
+}
+
+.bg-green-primary{
+  background-color: #40a474;
+}
+
+.bg-blue-primary{
+  background-color: #247cf4;
+}
+
+.bg-turquoise-primary{
+  background-color: #2596be;
+}
+
 option{
   color:#000;
 }
+
+.custom-left-24px {
+  position: relative;
+  left: 24px;
+}
+
+.w-19{
+  width:19px
+}
+
+.h-fit{
+  height: fit-content !important;
+}
+
+.h-20{
+  height: 20px;
+}
+
+.min-h-200{
+  min-height:200px;
+}
+

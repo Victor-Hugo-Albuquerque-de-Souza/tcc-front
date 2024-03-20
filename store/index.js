@@ -6,10 +6,19 @@ const myStore = () => {
         modules:[
             product
         ],
-        mutations: {},
         actions: {},
+        mutations: {
+            HANDLE_PRODUCT_NAME(state, payload){
+                state[0].name = payload
+            }
+        },
         getters: {
+            GET_PRODUCT_NAME(){
+                return product.state.name
+            }
             // totalProdutos: state => state.produtos.length
         }
     })
 }
+
+export default myStore
