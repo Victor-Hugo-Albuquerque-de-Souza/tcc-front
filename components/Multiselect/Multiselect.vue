@@ -20,22 +20,14 @@
         </slot>
         <!-- CONTAINER FOR SHOWING THE OPTIONS BADGES: -->
         <slot>
-            <div @click="openDropDown" class="form-control hover-pointer h-fit d-flex justify-content-center align-items-center p-0 min-h-200px h-fit flex-wrap">
+            <div @click="openDropDown" class="form-control hover-pointer h-fit min-h-82 d-flex justify-content-center align-items-center p-0 min-h-200px h-fit flex-wrap">
                 <badge v-for="(badge, index) in badges" :key="index" :label="badge.label"></badge>
             </div>
         </slot>
         <!-- CONTAINER FOR RENDERING THE DROPDOWN: -->
         <div v-if="hasDropdown" class="w-100 h-0">
-            <input
-                :value="value"
-                v-bind="$attrs"
-                v-on="listeners"
-                placeholder="Digite sua busca aqui.."
-                class="form-control bg-white border-0 rounded-0 position-relative text-dark z-index-2"
-                aria-describedby="addon-right addon-left "
-            />
             <div class="w-100 h-200px overflow-auto position-relative top-0 end-0 bg-white z-index-2 hover-pointer">
-                <span v-for="(item, index) in items" :key="index" :class="item.isSelected ? 'text-white bg-green' : 'text-black hover-text-white hover-bg-dark'" class="d-flex w-100">{{ item.label }}</span>
+                <span @click="handleSelection(item, index)" v-for="(item, index) in items" :key="index" :class="item.isSelected ? 'text-white bg-green' : 'text-black hover-text-white hover-bg-dark'" class="d-flex w-100">{{ item.label }}</span>
             </div>
         </div>
         <!-- OVERLAY TO CLOSE THE DROPDOWN: -->
@@ -124,32 +116,8 @@ export default {
                 id:6
             }
         ],
-        badges:[
-            {
-                label:"Brinquedo",
-                id:"1"
-            },
-            {
-                label:"Óleos",
-                id:"2"
-            },
-            {
-                label:"Plugs",
-                id:"3"
-            },
-            {
-                label:"Consolos",
-                id:"4"
-            },
-            {
-                label:"Langerie",
-                id:"5"
-            },
-            {
-                label:"Vibradores",
-                id:"6"
-            }
-        ]
+        selectedItems:[],
+        badges:[]
         };
     },
     computed: {
@@ -199,6 +167,15 @@ export default {
         },
         closeDropDown(){
             this.hasDropdown = false;
+        },
+        handleSelection(item, index){
+            this.items[index].isSelected = !item.isSelected
+            this.selectedItems = this.items.filter(item => item.isSelected)
+            this.badges = this.selectedItems.map((item, index) => ({
+                id: index,
+                label: item.label
+            }))
+            this.$emit('sendNewValue', this.selectedItems)
         }
     }
 };

@@ -238,6 +238,7 @@
                 <div class="col-md-12">
                     <multiselect
                         label="Tags"
+                        @sendNewValue="(value) => tags = value"
                     ></multiselect>
                 </div>
             </div>
@@ -435,7 +436,7 @@
             },
             tags:{
                 get(){
-
+                    
                 },
                 set(){
 
