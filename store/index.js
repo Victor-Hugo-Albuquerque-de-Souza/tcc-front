@@ -1,24 +1,27 @@
-import vuex from 'vuex'
-import product from './modules/product/index'
+import Vuex from 'vuex'
+import Vue from 'vue'
+import product from './modules/product/index.js'
 
-const myStore = () => {
-    return new vuex.Store({
-        modules:[
+Vue.use(Vuex)
+
+const createStore = () => {
+    return new Vuex.Store({
+        modules: {
             product
-        ],
-        actions: {},
+        },
         mutations: {
-            HANDLE_PRODUCT_NAME(state, payload){
-                state[0].name = payload
-            }
+            HANDLE_PRODUCT_NAME(state, payload) {
+                state.product.name = payload
+            },
         },
         getters: {
-            GET_PRODUCT_NAME(){
-                return product.state.name
-            }
-            // totalProdutos: state => state.produtos.length
+            GET_PRODUCT_NAME(state) {
+                return state.product.name
+            },
+        },
+        actions: {
         }
     })
 }
 
-export default myStore
+export default createStore
