@@ -26,8 +26,8 @@
         </slot>
         <!-- CONTAINER FOR RENDERING THE DROPDOWN: -->
         <div v-if="hasDropdown" class="w-100 h-0">
-            <div class="w-100 h-200px overflow-auto position-relative top-0 end-0 bg-white z-index-2 hover-pointer">
-                <span @click="handleSelection(item, index)" v-for="(item, index) in items" :key="index" :class="item.isSelected ? 'text-white bg-green' : 'text-black hover-text-white hover-bg-dark'" class="d-flex w-100">{{ item.label }}</span>
+            <div class="w-100 h-200px overflow-auto rounded-bottom shadow bg-light.bg-gradient position-relative top-0 end-0 bg-white z-index-2 hover-pointer">
+                <span @click="handleSelection(item, index)" v-for="(item, index) in items" :key="index" :class="item.isSelected ? 'text-white bg-green' : 'text-black hover-text-white hover-bg-dark'" class="d-flex w-100 px-1 py-1 text-capitalize">{{ item.label }}</span>
             </div>
         </div>
         <!-- OVERLAY TO CLOSE THE DROPDOWN: -->
@@ -73,6 +73,12 @@ export default {
         addonLeftIcon: {
             type: String,
             description: 'Input icon on the left'
+        },
+        initialCollection:{
+            type:Array,
+            default:()=>{
+                return []
+            }
         }
     },
     model: {
@@ -84,38 +90,7 @@ export default {
         focused: false,
         touched: false,
         hasDropdown:false,
-        items:[
-            {
-                label:'teste',
-                isSelected:false,
-                id:1
-            },
-            {
-                label:'teste',
-                isSelected:false,
-                id:2
-            },
-            {
-                label:'teste',
-                isSelected:false,
-                id:3
-            },
-            {
-                label:'teste',
-                isSelected:false,
-                id:4
-            },
-            {
-                label:'teste',
-                isSelected:false,
-                id:5
-            },
-            {
-                label:'teste',
-                isSelected:false,
-                id:6
-            }
-        ],
+        items:[],
         selectedItems:[],
         badges:[]
         };
@@ -176,6 +151,14 @@ export default {
                 label: item.label
             }))
             this.$emit('sendNewValue', this.selectedItems)
+        }
+    },
+    watch:{
+        initialCollection:{
+            immediate:true,
+            handler(){
+                this.items = this.initialCollection
+            }
         }
     }
 };

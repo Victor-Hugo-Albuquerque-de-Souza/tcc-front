@@ -1,0 +1,215 @@
+const initialState = {
+    product:{
+        brands:[
+            {
+                id:1,
+                label:'marca 1',
+                isSelected:false
+            },
+            {
+                id:2,
+                label:'marca 2',
+                isSelected:false
+            },
+            {
+                id:3,
+                label:'marca 3',
+                isSelected:false
+            },
+            {
+                id:4,
+                label:'marca 4',
+                isSelected:false
+            },
+            {
+                id:5,
+                label:'marca 5',
+                isSelected:false
+            },
+            {
+                id:6,
+                label:'marca 6',
+                isSelected:false
+            },
+        ],
+        categories:[
+            {
+                id:1,
+                label:'langeries',
+                isSelected:false
+            },
+            {
+                id:2,
+                label:'óleos de massagem',
+                isSelected:false
+            },
+            {
+                id:3,
+                label:'próteses',
+                isSelected:false
+            },
+            {
+                id:4,
+                label:'bdsm',
+                isSelected:false
+            },
+            {
+                id:5,
+                label:'cosméticos',
+                isSelected:false
+            },
+            {
+                id:6,
+                label:'jogos',
+                isSelected:false
+            },
+        ],
+        tags:[
+            {
+                id:1,
+                label:'langeries',
+                isSelected:false
+            },
+            {
+                id:2,
+                label:'óleos de massagem',
+                isSelected:false
+            },
+            {
+                id:3,
+                label:'próteses',
+                isSelected:false
+            },
+            {
+                id:4,
+                label:'bdsm',
+                isSelected:false
+            },
+            {
+                id:5,
+                label:'cosméticos',
+                isSelected:false
+            },
+            {
+                id:6,
+                label:'jogos',
+                isSelected:false
+            },
+        ],
+        relatedProducts:[
+            {
+                id:1,
+                label:'langerie bordada',
+                isSelected:false
+            },
+            {
+                id:2,
+                label:'lubrificante caro',
+                isSelected:false
+            },
+            {
+                id:3,
+                label:'prótese peniana',
+                isSelected:false
+            },
+            {
+                id:4,
+                label:'maquiagem íntima',
+                isSelected:false
+            },
+            {
+                id:5,
+                label:'dados eróticos',
+                isSelected:false
+            },
+            {
+                id:6,
+                label:'algemas de pelúcia',
+                isSelected:false
+            },
+        ],
+        colors:[
+            {
+                id:1,
+                label:'branco',
+                isSelected:false
+            },
+            {
+                id:2,
+                label:'preto',
+                isSelected:false
+            },
+            {
+                id:3,
+                label:'amarelo',
+                isSelected:false
+            },
+            {
+                id:4,
+                label:'verde',
+                isSelected:false
+            },
+            {
+                id:5,
+                label:'vermelho',
+                isSelected:false
+            },
+            {
+                id:6,
+                label:'roxo',
+                isSelected:false
+            }
+        ],
+        sizes:[
+            {
+                id:1,
+                label:'PP',
+                isSelected:false
+            },
+            {
+                id:2,
+                label:'P',
+                isSelected:false
+            },
+            {
+                id:3,
+                label:'M',
+                isSelected:false
+            },
+            {
+                id:4,
+                label:'G',
+                isSelected:false
+            },
+            {
+                id:5,
+                label:'GG',
+                isSelected:false
+            },
+            {
+                id:6,
+                label:'XG',
+                isSelected:false
+            }
+        ],
+        volts:[
+            {
+                id:1,
+                label:'110v',
+                isSelected:false
+            },
+            {
+                id:2,
+                label:'220v',
+                isSelected:false
+            },
+        ]
+    }
+}
+
+export default {
+namespaced: true,
+state: ()=>{
+    return initialState
+}
+}

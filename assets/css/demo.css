@@ -68,7 +68,7 @@
 }
 
 .hover-pointer:hover{
-  cursor:pointer;
+  cursor:pointer !important;
 }
 
 .hover-bg-dark:hover{
@@ -102,6 +102,10 @@ option{
 .custom-left-24px {
   position: relative;
   left: 24px;
+}
+
+.mb-22{
+  margin-bottom: 22px;
 }
 
 .w-19{

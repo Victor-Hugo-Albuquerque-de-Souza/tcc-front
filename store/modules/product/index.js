@@ -3,6 +3,7 @@ const initialState = {
     description:"",
     category:"",
     price:0,
+    finalPrice:0,
     profit:0,
     wheight:0,
     availability:false,
@@ -24,7 +25,8 @@ const initialState = {
         name:"",
         uuid:""
     },
-    tags:[]
+    tags:[],
+    relatedProducts:[]
 }
 
 export default {

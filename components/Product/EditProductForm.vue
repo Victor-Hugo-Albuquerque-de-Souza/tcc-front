@@ -18,11 +18,10 @@
                 <div class="col-md-5">
                     <base-select
                         label="Fabricante:"
+                        v-model="brandName"
                     >
                         <template #options>
-                            <option value="teste1">Teste 1</option>
-                            <option value="teste2">Teste 2</option>
-                            <option value="teste3">Teste 3</option>
+                            <option v-for="brand, index in $store.state.repositories.product.brands" class="hover-pointer text-capitalize" :key="index" :value="brand.label">{{ brand.label }}</option>
                         </template>
                     </base-select>
                 </div>
@@ -31,13 +30,11 @@
             <div class="row">
                 <div class="col-md-12">
                     <base-select
-                        label="Categoria:"
+                        label="Categorias:"
                         v-model="category"
                     >
                         <template #options>
-                            <option value="teste1">Teste 1</option>
-                            <option value="teste2">Teste 2</option>
-                            <option value="teste3">Teste 3</option>
+                            <option v-for="category, index in $store.state.repositories.product.categories" class="hover-pointer text-capitalize" :key="index" :value="category.label">{{ category.label }}</option>
                         </template>
                     </base-select>
                 </div>
@@ -47,7 +44,7 @@
                 <div class="col-md-4">
                     <base-input
                         type="number"
-                        label="Preço de custo:"
+                        label="Preço de custo (R$):"
                         placeholder="R$"
                         v-model="price"
                     >
@@ -56,7 +53,7 @@
                 <div class="col-md-4">
                     <base-input
                         type="number"
-                        label="Margem de lucro:"
+                        label="Margem de lucro (%):"
                         placeholder="%"
                         v-model="profit"
                     >
@@ -65,7 +62,7 @@
                 <div class="col-md-4">
                     <base-input
                         type="number"
-                        label="Preço final:"
+                        label="Preço final (R$):"
                         placeholder="R$"
                         v-model="finalPrice"
                     >
@@ -116,30 +113,30 @@
             <div v-if="fieldsetControllers.customAttributes" class="row">
                 <div class="col-md-6">
                     <base-select
-                        label="Cores:"
+                        label="Cor predominante:"
+                        v-model="color"
                     >
                         <template #options>
-                            <option value="teste1">Teste 1</option>
-                            <option value="teste2">Teste 2</option>
-                            <option value="teste3">Teste 3</option>
+                            <option v-for="color, index in $store.state.repositories.product.colors" class="hover-pointer text-capitalize" :key="index" :value="color.label">{{ color.label }}</option>
                         </template>
                     </base-select>
                 </div>
                 <div class="col-md-6">
-                    <base-input
-                        type="text"
+                    <base-select
                         label="Tamanho:"
-                        placeholder=""
                         v-model="size"
                     >
-                    </base-input>
+                        <template #options>
+                            <option v-for="size, index in $store.state.repositories.product.sizes" class="hover-pointer text-capitalize" :key="index" :value="size.label">{{ size.label }}</option>
+                        </template>
+                    </base-select>
                 </div>
             </div>
             <!-- 7th ROW: CUSTOM ATTRIBUTES - MANUFACTURING DATE, LOT NUMBER AND VOLTS -->
             <div v-if="fieldsetControllers.customAttributes" class="row">
                 <div class="col-md-4">
                     <base-input
-                        type="text"
+                        type="date"
                         label="Fabricação:"
                         placeholder=""
                         v-model="manufacturingDate"
@@ -156,13 +153,14 @@
                     </base-input>
                 </div>
                 <div class="col-md-4">
-                    <base-input
-                        type="text"
+                    <base-select
                         label="Voltagem:"
-                        placeholder=""
                         v-model="volts"
                     >
-                    </base-input>
+                        <template #options>
+                            <option v-for="volt, index in $store.state.repositories.product.volts" :key="index" :value="volts.label">{{ volt.label }}</option>
+                        </template>
+                    </base-select>
                 </div>
             </div>
             <!-- 8th ROW: RADIO BUTTONS - HAS DIMENSIONS CONTROLLER -->
@@ -198,7 +196,7 @@
                 <div class="col-md-3">
                     <base-input
                         type="text"
-                        label="Altura:"
+                        label="Altura (CM):"
                         placeholder="cm"
                         v-model="height"
                     >
@@ -207,7 +205,7 @@
                 <div class="col-md-3">
                     <base-input
                         type="text"
-                        label="Largura:"
+                        label="Largura (CM):"
                         placeholder="cm"
                         v-model="width"
                     >
@@ -216,8 +214,8 @@
                 <div class="col-md-3">
                     <base-input
                         type="text"
-                        label="Profundidade:"
-                        placeholder="depth"
+                        label="Profundidade (CM):"
+                        placeholder="cm"
                         v-model="depth"
                     >
                     </base-input>
@@ -225,8 +223,8 @@
                 <div class="col-md-3">
                     <base-input
                         type="text"
-                        label="weight"
-                        placeholder="depth"
+                        label="Peso (G)"
+                        placeholder="g"
                         v-model="weight"
                     >
                     </base-input>
@@ -237,6 +235,7 @@
                 <div class="col-md-12">
                     <multiselect
                         label="Tags"
+                        :initialCollection="$store.state.repositories.product.tags"
                         @sendNewValue="(value) => tags = value"
                     ></multiselect>
                 </div>
@@ -246,12 +245,13 @@
                 <div class="col-md-12">
                     <multiselect
                         label="Produtos relacionados:"
-                        @sendNewValue="(value) => tags = value"
+                        :initialCollection="$store.state.repositories.product.relatedProducts"
+                        @sendNewValue="(value) => relatedProducs = value"
                     ></multiselect>
                 </div>
             </div>
             <!-- 12th ROW: PICTURES -->
-            <div class="row py-3 d-flex flex-column justify-content-between">
+            <div class="row py-3 mb-22 d-flex flex-column justify-content-between">
                 <label class="col-md-12"> Imagens do Produto: </label>
                 <div class="pictures-container">
                     <div class="picture-unit-container">
@@ -285,8 +285,7 @@
                 repository:{
                     brands:[],
                     tags:[]
-                },
-                category:""
+                }
             };
         },
         props:{
@@ -316,162 +315,167 @@
                     this.$store.commit('HANDLE_PRODUCT_NAME', value)
                 }
             },
-            // category:{
-            //     get(){
-
-            //     },
-            //     set(){
-
-            //     }
-            // },
+            category:{
+                get(){
+                    return this.$store.getters.GET_PRODUCT_CATEGORY
+                },
+                set(value){
+                    this.$store.commit('HANDLE_PRODUCT_CATEGORY', value)
+                }
+            },
             description:{
                 get(){
-
+                    return this.$store.getters.GET_PRODUCT_DESCRIPTION
                 },
-                set(){
-
+                set(value){
+                    this.$store.commit('HANDLE_PRODUCT_DESCRIPTION', value)
                 }
             },
             price:{
                 get(){
-
+                    return this.$store.getters.GET_PRODUCT_PRICE
                 },
-                set(){
-
+                set(value){
+                    this.$store.commit('HANDLE_PRODUCT_PRICE', value)
                 }
             },
             profit:{
                 get(){
-
+                    return this.$store.getters.GET_PRODUCT_PROFIT
                 },
-                set(){
-
+                set(value){
+                    this.$store.commit('HANDLE_PRODUCT_PROFIT', value)
                 }
             },
             finalPrice:{
                 get(){
-
+                    return this.$store.getters.GET_PRODUCT_FINAL_PRICE
                 },
-                set(){
-
+                set(value){
+                    this.$store.commit('HANDLE_PRODUCT_FINAL_PRICE', value)
                 }
             },
             weight:{
                 get(){
-
+                    return this.$store.getters.GET_PRODUCT_WEIGHT
                 },
-                set(){
-
+                set(value){
+                    this.$store.commit('HANDLE_PRODUCT_WEIGHT', value)
                 }
             },
             availability:{
                 get(){
-
+                    return this.$store.getters.GET_PRODUCT_AVAILABILITY
                 },
-                set(){
-
+                set(value){
+                    this.$store.commit('HANDLE_PRODUCT_AVAILABILITY', value)
                 }
             },
             featured:{
                 get(){
-
+                    return this.$store.getters.GET_PRODUCT_FEATURED
                 },
-                set(){
-
+                set(value){
+                    this.$store.commit('HANDLE_PRODUCT_FEATURED', value)
                 }
             },
             color:{
                 get(){
-
+                    return this.$store.getters.GET_PRODUCT_COLOR
                 },
-                set(){
-
+                set(value){
+                    this.$store.commit('HANDLE_PRODUCT_COLOR', value)
                 }
             },
             size:{
                 get(){
-
+                    return this.$store.getters.GET_PRODUCT_SIZE
                 },
-                set(){
-
+                set(value){
+                    this.$store.commit('HANDLE_PRODUCT_SIZE', value)
                 }
             },
             manufacturingDate:{
                 get(){
-
+                    return this.$store.getters.GET_PRODUCT_MANUFACTURING_DATE
                 },
-                set(){
-
+                set(value){
+                    this.$store.commit('HANDLE_PRODUCT_MANUFACTURING_DATE', value)
                 }
             },
             lotNumber:{
                 get(){
-
+                    return this.$store.getters.GET_PRODUCT_LOT_NUMBER
                 },
-                set(){
-
+                set(value){
+                    this.$store.commit('HANDLE_PRODUCT_LOT_NUMBER', value)
                 }
             },
             volts:{
                 get(){
-
+                    return this.$store.getters.GET_PRODUCT_VOLTS
                 },
-                set(){
-
+                set(value){
+                    this.$store.commit('HANDLE_PRODUCT_VOLTS', value)
                 }
             },
             height:{
                 get(){
-
+                    return this.$store.getters.GET_PRODUCT_HEIGHT
                 },
-                set(){
-
+                set(value){
+                    this.$store.commit('HANDLE_PRODUCT_HEIGHT', value)
                 }
             },
             width:{
                 get(){
-
+                    return this.$store.getters.GET_PRODUCT_WIDTH
                 },
-                set(){
-
+                set(value){
+                    this.$store.commit('HANDLE_PRODUCT_WIDTH', value)
                 }
             },
             depth:{
                 get(){
-
+                    return this.$store.getters.GET_PRODUCT_DEPTH
                 },
-                set(){
-
+                set(value){
+                    this.$store.commit('HANDLE_PRODUCT_DEPTH', value)
                 }
             },
             brandName:{
                 get(){
-
+                    return this.$store.getters.GET_PRODUCT_BRAND_NAME
                 },
-                set(){
-
+                set(value){
+                    this.$store.commit('HANDLE_PRODUCT_BRAND_NAME', value)
                 }
             },
             brandUuid:{
                 get(){
-
+                    return this.$store.getters.GET_PRODUCT_BRAND_UUID
                 },
-                set(){
-
+                set(value){
+                    this.$store.commit('HANDLE_PRODUCT_BRAND_UUID', value)
                 }
             },
             tags:{
                 get(){
-                    
+                    return this.$store.getters.GET_PRODUCT_TAGS
                 },
-                set(){
-
+                set(value){
+                    this.$store.commit('HANDLE_PRODUCT_TAGS', value)
+                }
+            },
+            relatedProducs:{
+                get(){
+                    return this.$store.getters.GET_PRODUCT_RELATED_PRODUCTS
+                },
+                set(value){
+                    this.$store.commit('HANDLE_PRODUCT_RELATED_PRODUCTS', value)
                 }
             }
             
         }
     };
 </script>
-<!-- 
-<style scoped>
-</style> -->

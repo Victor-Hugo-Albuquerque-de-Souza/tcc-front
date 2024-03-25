@@ -1,5 +1,5 @@
 <template>
-    <div class="d-flex h-20 mr-4 my-4 py-3 px-3 rounded justify-content-center text-white align-items-center" :class="getRandomColor"> 
+    <div class="d-flex h-20 mr-4 my-4 py-3 px-3 rounded justify-content-center text-white align-items-center text-uppercase" :class="getRandomColor"> 
         {{ label }}
     </div>
 </template>
