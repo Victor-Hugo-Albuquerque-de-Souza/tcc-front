@@ -8,6 +8,7 @@ import BaseButton from '@/components/BaseButton.vue';
 import BaseCheckbox from '@/components/Inputs/BaseCheckbox.vue';
 import BaseSelect from '@/components/Inputs/BaseSelect.vue';
 import Badge from '~/components/Multiselect/Badge.vue';
+import BasePicture from '@/components/Inputs/BasePicture.vue';
 import Multiselect from '@/components/Multiselect/Multiselect.vue';
 import { Input, InputNumber, Tooltip, Popover } from 'element-ui';
 /**
@@ -24,6 +25,7 @@ Vue.component(InputNumber.name, InputNumber);
 Vue.component(BaseTextArea.name, BaseTextArea);
 Vue.component(BaseRadio.name, BaseRadio);
 Vue.component(BaseSelect.name, BaseSelect);
+Vue.component(BasePicture.name, BasePicture);
 Vue.component(Multiselect.name, Multiselect);
 Vue.component(Badge.name, Badge)
 Vue.use(Tooltip);

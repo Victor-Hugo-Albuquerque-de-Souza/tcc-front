@@ -117,7 +117,6 @@
                 <div class="col-md-6">
                     <base-select
                         label="Cores:"
-
                     >
                         <template #options>
                             <option value="teste1">Teste 1</option>
@@ -240,6 +239,33 @@
                         label="Tags"
                         @sendNewValue="(value) => tags = value"
                     ></multiselect>
+                </div>
+            </div>
+            <!-- 11th ROW: RELATED PRODUCTS MULTISELECT -->
+            <div class="row">
+                <div class="col-md-12">
+                    <multiselect
+                        label="Produtos relacionados:"
+                        @sendNewValue="(value) => tags = value"
+                    ></multiselect>
+                </div>
+            </div>
+            <!-- 12th ROW: PICTURES -->
+            <div class="row py-3 d-flex flex-column justify-content-between">
+                <label class="col-md-12"> Imagens do Produto: </label>
+                <div class="pictures-container">
+                    <div class="picture-unit-container">
+                        <base-picture/>
+                    </div>
+                    <div class="picture-unit-container">
+                        <base-picture/>
+                    </div>
+                    <div class="picture-unit-container">
+                        <base-picture/>
+                    </div>
+                    <div class="picture-unit-container">
+                        <base-picture/>
+                    </div>
                 </div>
             </div>
             <base-button native-type="submit" type="primary" class="btn-fill">
@@ -446,3 +472,6 @@
         }
     };
 </script>
+<!-- 
+<style scoped>
+</style> -->
