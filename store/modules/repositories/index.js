@@ -3,160 +3,160 @@ const initialState = {
         brands:[
             {
                 id:1,
-                label:'marca 1',
+                label:'Marca 1',
                 isSelected:false
             },
             {
                 id:2,
-                label:'marca 2',
+                label:'Marca 2',
                 isSelected:false
             },
             {
                 id:3,
-                label:'marca 3',
+                label:'Marca 3',
                 isSelected:false
             },
             {
                 id:4,
-                label:'marca 4',
+                label:'Marca 4',
                 isSelected:false
             },
             {
                 id:5,
-                label:'marca 5',
+                label:'Marca 5',
                 isSelected:false
             },
             {
                 id:6,
-                label:'marca 6',
+                label:'Marca 6',
                 isSelected:false
             },
         ],
         categories:[
             {
                 id:1,
-                label:'langeries',
+                label:'Langeries',
                 isSelected:false
             },
             {
                 id:2,
-                label:'óleos de massagem',
+                label:'Óleos de massagem',
                 isSelected:false
             },
             {
                 id:3,
-                label:'próteses',
+                label:'Próteses',
                 isSelected:false
             },
             {
                 id:4,
-                label:'bdsm',
+                label:'Bdsm',
                 isSelected:false
             },
             {
                 id:5,
-                label:'cosméticos',
+                label:'Cosméticos',
                 isSelected:false
             },
             {
                 id:6,
-                label:'jogos',
+                label:'Jogos',
                 isSelected:false
             },
         ],
         tags:[
             {
                 id:1,
-                label:'langeries',
+                label:'Langeries',
                 isSelected:false
             },
             {
                 id:2,
-                label:'óleos de massagem',
+                label:'Óleos de massagem',
                 isSelected:false
             },
             {
                 id:3,
-                label:'próteses',
+                label:'Próteses',
                 isSelected:false
             },
             {
                 id:4,
-                label:'bdsm',
+                label:'Bdsm',
                 isSelected:false
             },
             {
                 id:5,
-                label:'cosméticos',
+                label:'Cosméticos',
                 isSelected:false
             },
             {
                 id:6,
-                label:'jogos',
+                label:'Jogos',
                 isSelected:false
             },
         ],
         relatedProducts:[
             {
                 id:1,
-                label:'langerie bordada',
+                label:'Langerie bordada',
                 isSelected:false
             },
             {
                 id:2,
-                label:'lubrificante caro',
+                label:'Lubrificante caro',
                 isSelected:false
             },
             {
                 id:3,
-                label:'prótese peniana',
+                label:'Prótese peniana',
                 isSelected:false
             },
             {
                 id:4,
-                label:'maquiagem íntima',
+                label:'Maquiagem íntima',
                 isSelected:false
             },
             {
                 id:5,
-                label:'dados eróticos',
+                label:'Dados eróticos',
                 isSelected:false
             },
             {
                 id:6,
-                label:'algemas de pelúcia',
+                label:'Algemas de pelúcia',
                 isSelected:false
             },
         ],
         colors:[
             {
                 id:1,
-                label:'branco',
+                label:'Branco',
                 isSelected:false
             },
             {
                 id:2,
-                label:'preto',
+                label:'Preto',
                 isSelected:false
             },
             {
                 id:3,
-                label:'amarelo',
+                label:'Amarelo',
                 isSelected:false
             },
             {
                 id:4,
-                label:'verde',
+                label:'Verde',
                 isSelected:false
             },
             {
                 id:5,
-                label:'vermelho',
+                label:'Vermelho',
                 isSelected:false
             },
             {
                 id:6,
-                label:'roxo',
+                label:'Roxo',
                 isSelected:false
             }
         ],

@@ -8,8 +8,9 @@ const initialState = {
     wheight:0,
     availability:false,
     featured:false,
+    stock:0,
     customAttributes:{
-        colors:"",
+        color:"",
         size:"",
         manufacturingDate:"",
         lotNumber:"",
@@ -21,12 +22,10 @@ const initialState = {
         depth:"",
         weight:""
     },
-    brand:{
-        name:"",
-        uuid:""
-    },
+    brand:"",
     tags:[],
-    relatedProducts:[]
+    relatedProducts:[],
+    images:[]
 }
 
 export default {

@@ -18,17 +18,17 @@
                 <div class="col-md-5">
                     <base-select
                         label="Fabricante:"
-                        v-model="brandName"
+                        v-model="brand"
                     >
                         <template #options>
-                            <option v-for="brand, index in $store.state.repositories.product.brands" class="hover-pointer text-capitalize" :key="index" :value="brand.label">{{ brand.label }}</option>
+                            <option v-for="brand, index in $store.state.repositories.product.brands" class="hover-pointer text-capitalize" :key="index" :value="brand.id">{{ brand.label }}</option>
                         </template>
                     </base-select>
                 </div>
             </div>
-            <!-- 2nd ROW: CATEGORY -->
+            <!-- 2nd ROW: CATEGORY AND STOCK-->
             <div class="row">
-                <div class="col-md-12">
+                <div class="col-md-6">
                     <base-select
                         label="Categorias:"
                         v-model="category"
@@ -37,6 +37,15 @@
                             <option v-for="category, index in $store.state.repositories.product.categories" class="hover-pointer text-capitalize" :key="index" :value="category.label">{{ category.label }}</option>
                         </template>
                     </base-select>
+                </div>
+                <div class="col-md-6">
+                    <base-input
+                        type="number"
+                        label="Estoque:"
+                        placeholder="Quantidade"
+                        v-model="stock"
+                    >
+                    </base-input>
                 </div>
             </div>
             <!-- 3rd ROW: PRICE, PROFIT AND FINAL PRICE -->
@@ -158,7 +167,7 @@
                         v-model="volts"
                     >
                         <template #options>
-                            <option v-for="volt, index in $store.state.repositories.product.volts" :key="index" :value="volts.label">{{ volt.label }}</option>
+                            <option v-for="volt, index in $store.state.repositories.product.volts" :key="index" :value="volt.label">{{ volt.label }}</option>
                         </template>
                     </base-select>
                 </div>
@@ -275,207 +284,204 @@
     </card>
 </template>
 <script>
-    export default {
-        data() {
-            return {
-                fieldsetControllers:{
-                    customAttributes:false,
-                    dimensions:false
-                },
-                repository:{
-                    brands:[],
-                    tags:[]
-                }
-            };
-        },
-        props:{
-            type:{
-                type:String,
-                default:"create"
-            }
-        },
-        methods: {
-            updateProfile() {
-            // alert('Your data: ' + JSON.stringify(this.user));
-            }
-        },
-        computed:{
-            getTitle(){
-                if(this.type === 'create'){
-                    return 'Novo produto'
-                } else {
-                    return 'Produto em edição..'
-                }
+export default {
+    data() {
+        return {
+            fieldsetControllers:{
+                customAttributes:false,
+                dimensions:false
             },
-            name:{
-                get(){
-                    return this.$store.getters.GET_PRODUCT_NAME
-                },
-                set(value){
-                    this.$store.commit('HANDLE_PRODUCT_NAME', value)
-                }
-            },
-            category:{
-                get(){
-                    return this.$store.getters.GET_PRODUCT_CATEGORY
-                },
-                set(value){
-                    this.$store.commit('HANDLE_PRODUCT_CATEGORY', value)
-                }
-            },
-            description:{
-                get(){
-                    return this.$store.getters.GET_PRODUCT_DESCRIPTION
-                },
-                set(value){
-                    this.$store.commit('HANDLE_PRODUCT_DESCRIPTION', value)
-                }
-            },
-            price:{
-                get(){
-                    return this.$store.getters.GET_PRODUCT_PRICE
-                },
-                set(value){
-                    this.$store.commit('HANDLE_PRODUCT_PRICE', value)
-                }
-            },
-            profit:{
-                get(){
-                    return this.$store.getters.GET_PRODUCT_PROFIT
-                },
-                set(value){
-                    this.$store.commit('HANDLE_PRODUCT_PROFIT', value)
-                }
-            },
-            finalPrice:{
-                get(){
-                    return this.$store.getters.GET_PRODUCT_FINAL_PRICE
-                },
-                set(value){
-                    this.$store.commit('HANDLE_PRODUCT_FINAL_PRICE', value)
-                }
-            },
-            weight:{
-                get(){
-                    return this.$store.getters.GET_PRODUCT_WEIGHT
-                },
-                set(value){
-                    this.$store.commit('HANDLE_PRODUCT_WEIGHT', value)
-                }
-            },
-            availability:{
-                get(){
-                    return this.$store.getters.GET_PRODUCT_AVAILABILITY
-                },
-                set(value){
-                    this.$store.commit('HANDLE_PRODUCT_AVAILABILITY', value)
-                }
-            },
-            featured:{
-                get(){
-                    return this.$store.getters.GET_PRODUCT_FEATURED
-                },
-                set(value){
-                    this.$store.commit('HANDLE_PRODUCT_FEATURED', value)
-                }
-            },
-            color:{
-                get(){
-                    return this.$store.getters.GET_PRODUCT_COLOR
-                },
-                set(value){
-                    this.$store.commit('HANDLE_PRODUCT_COLOR', value)
-                }
-            },
-            size:{
-                get(){
-                    return this.$store.getters.GET_PRODUCT_SIZE
-                },
-                set(value){
-                    this.$store.commit('HANDLE_PRODUCT_SIZE', value)
-                }
-            },
-            manufacturingDate:{
-                get(){
-                    return this.$store.getters.GET_PRODUCT_MANUFACTURING_DATE
-                },
-                set(value){
-                    this.$store.commit('HANDLE_PRODUCT_MANUFACTURING_DATE', value)
-                }
-            },
-            lotNumber:{
-                get(){
-                    return this.$store.getters.GET_PRODUCT_LOT_NUMBER
-                },
-                set(value){
-                    this.$store.commit('HANDLE_PRODUCT_LOT_NUMBER', value)
-                }
-            },
-            volts:{
-                get(){
-                    return this.$store.getters.GET_PRODUCT_VOLTS
-                },
-                set(value){
-                    this.$store.commit('HANDLE_PRODUCT_VOLTS', value)
-                }
-            },
-            height:{
-                get(){
-                    return this.$store.getters.GET_PRODUCT_HEIGHT
-                },
-                set(value){
-                    this.$store.commit('HANDLE_PRODUCT_HEIGHT', value)
-                }
-            },
-            width:{
-                get(){
-                    return this.$store.getters.GET_PRODUCT_WIDTH
-                },
-                set(value){
-                    this.$store.commit('HANDLE_PRODUCT_WIDTH', value)
-                }
-            },
-            depth:{
-                get(){
-                    return this.$store.getters.GET_PRODUCT_DEPTH
-                },
-                set(value){
-                    this.$store.commit('HANDLE_PRODUCT_DEPTH', value)
-                }
-            },
-            brandName:{
-                get(){
-                    return this.$store.getters.GET_PRODUCT_BRAND_NAME
-                },
-                set(value){
-                    this.$store.commit('HANDLE_PRODUCT_BRAND_NAME', value)
-                }
-            },
-            brandUuid:{
-                get(){
-                    return this.$store.getters.GET_PRODUCT_BRAND_UUID
-                },
-                set(value){
-                    this.$store.commit('HANDLE_PRODUCT_BRAND_UUID', value)
-                }
-            },
-            tags:{
-                get(){
-                    return this.$store.getters.GET_PRODUCT_TAGS
-                },
-                set(value){
-                    this.$store.commit('HANDLE_PRODUCT_TAGS', value)
-                }
-            },
-            relatedProducs:{
-                get(){
-                    return this.$store.getters.GET_PRODUCT_RELATED_PRODUCTS
-                },
-                set(value){
-                    this.$store.commit('HANDLE_PRODUCT_RELATED_PRODUCTS', value)
-                }
-            }
-            
+        };
+    },
+    props:{
+        type:{
+            type:String,
+            default:"create"
         }
-    };
+    },
+    methods: {
+        updateProduct() {
+            this.$store.commit('HANDLE_TOOLS_ALERT', true)
+        // alert('Your data: ' + JSON.stringify(this.user));
+        }
+    },
+    computed:{
+        getTitle(){
+            if(this.type === 'create'){
+                return 'Novo produto'
+            } else {
+                return 'Produto em edição..'
+            }
+        },
+        name:{
+            get(){
+                return this.$store.getters.GET_PRODUCT_NAME
+            },
+            set(value){
+                this.$store.commit('HANDLE_PRODUCT_NAME', value)
+            }
+        },
+        category:{
+            get(){
+                return this.$store.getters.GET_PRODUCT_CATEGORY
+            },
+            set(value){
+                this.$store.commit('HANDLE_PRODUCT_CATEGORY', value)
+            }
+        },
+        description:{
+            get(){
+                return this.$store.getters.GET_PRODUCT_DESCRIPTION
+            },
+            set(value){
+                this.$store.commit('HANDLE_PRODUCT_DESCRIPTION', value)
+            }
+        },
+        price:{
+            get(){
+                return this.$store.getters.GET_PRODUCT_PRICE
+            },
+            set(value){
+                this.$store.commit('HANDLE_PRODUCT_PRICE', value)
+            }
+        },
+        profit:{
+            get(){
+                return this.$store.getters.GET_PRODUCT_PROFIT
+            },
+            set(value){
+                this.$store.commit('HANDLE_PRODUCT_PROFIT', value)
+            }
+        },
+        finalPrice:{
+            get(){
+                return this.$store.getters.GET_PRODUCT_FINAL_PRICE
+            },
+            set(value){
+                this.$store.commit('HANDLE_PRODUCT_FINAL_PRICE', value)
+            }
+        },
+        weight:{
+            get(){
+                return this.$store.getters.GET_PRODUCT_WEIGHT
+            },
+            set(value){
+                this.$store.commit('HANDLE_PRODUCT_WEIGHT', value)
+            }
+        },
+        stock:{
+            get(){
+                return this.$store.getters.GET_PRODUCT_STOCK
+            },
+            set(value){
+                this.$store.commit('HANDLE_PRODUCT_STOCK', value)
+            }
+        },
+        availability:{
+            get(){
+                return this.$store.getters.GET_PRODUCT_AVAILABILITY
+            },
+            set(value){
+                this.$store.commit('HANDLE_PRODUCT_AVAILABILITY', value)
+            }
+        },
+        featured:{
+            get(){
+                return this.$store.getters.GET_PRODUCT_FEATURED
+            },
+            set(value){
+                this.$store.commit('HANDLE_PRODUCT_FEATURED', value)
+            }
+        },
+        color:{
+            get(){
+                return this.$store.getters.GET_PRODUCT_COLOR
+            },
+            set(value){
+                this.$store.commit('HANDLE_PRODUCT_COLOR', value)
+            }
+        },
+        size:{
+            get(){
+                return this.$store.getters.GET_PRODUCT_SIZE
+            },
+            set(value){
+                this.$store.commit('HANDLE_PRODUCT_SIZE', value)
+            }
+        },
+        manufacturingDate:{
+            get(){
+                return this.$store.getters.GET_PRODUCT_MANUFACTURING_DATE
+            },
+            set(value){
+                this.$store.commit('HANDLE_PRODUCT_MANUFACTURING_DATE', value)
+            }
+        },
+        lotNumber:{
+            get(){
+                return this.$store.getters.GET_PRODUCT_LOT_NUMBER
+            },
+            set(value){
+                this.$store.commit('HANDLE_PRODUCT_LOT_NUMBER', value)
+            }
+        },
+        volts:{
+            get(){
+                return this.$store.getters.GET_PRODUCT_VOLTS
+            },
+            set(value){
+                this.$store.commit('HANDLE_PRODUCT_VOLTS', value)
+            }
+        },
+        height:{
+            get(){
+                return this.$store.getters.GET_PRODUCT_HEIGHT
+            },
+            set(value){
+                this.$store.commit('HANDLE_PRODUCT_HEIGHT', value)
+            }
+        },
+        width:{
+            get(){
+                return this.$store.getters.GET_PRODUCT_WIDTH
+            },
+            set(value){
+                this.$store.commit('HANDLE_PRODUCT_WIDTH', value)
+            }
+        },
+        depth:{
+            get(){
+                return this.$store.getters.GET_PRODUCT_DEPTH
+            },
+            set(value){
+                this.$store.commit('HANDLE_PRODUCT_DEPTH', value)
+            }
+        },
+        brand:{
+            get(){
+                return this.$store.getters.GET_PRODUCT_BRAND
+            },
+            set(value){
+                this.$store.commit('HANDLE_PRODUCT_BRAND', value)
+            }
+        },
+        tags:{
+            get(){
+                return this.$store.getters.GET_PRODUCT_TAGS
+            },
+            set(value){
+                this.$store.commit('HANDLE_PRODUCT_TAGS', value)
+            }
+        },
+        relatedProducs:{
+            get(){
+                return this.$store.getters.GET_PRODUCT_RELATED_PRODUCTS
+            },
+            set(value){
+                this.$store.commit('HANDLE_PRODUCT_RELATED_PRODUCTS', value)
+            }
+        }
+        
+    }
+};
 </script>

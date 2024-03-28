@@ -59,6 +59,8 @@
   height: 100vh;
 }
 
+/* ====================================================================== */
+
 .z-index-1{
   z-index:1;
 }
@@ -109,8 +111,17 @@ option{
 }
 
 .w-19{
-  width:19px
+  width:19px;
 }
+
+.w-0{
+  width:0;
+}
+
+.h-0{
+  height: 0;
+}
+
 
 .h-fit{
   height: fit-content !important;
@@ -126,6 +137,14 @@ option{
 
 .min-h-82{
   min-height:82px;
+}
+
+.overflow-visible{
+  overflow: visible;
+}
+
+.smooth-2{
+  transition: 0.2s all ease;
 }
 
 .w-22pct{

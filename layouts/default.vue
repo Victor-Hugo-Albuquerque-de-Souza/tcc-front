@@ -84,6 +84,16 @@
         </zoom-center-transition>
       </div>
     </div>
+    <div class="w-0 h-0">
+      <div class="position-fixed bottom-0 right-0">
+        <base-alert v-if="$store.state.tools.alert" @dismissAlert="$store.commit('HANDLE_TOOLS_ALERT', false)" type="success" dismissible>
+            <span
+                ><b> Success - </b> This is a regular notification made with
+                ".alert-success"</span
+            >
+        </base-alert>
+      </div>
+    </div>
   </div>
 </template>
 <script>

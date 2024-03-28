@@ -2,6 +2,7 @@ import Vuex from 'vuex'
 import Vue from 'vue'
 import product from './modules/product/index.js'
 import repositories from './modules/repositories/index.js'
+import tools from './modules/tools/index.js'
 
 Vue.use(Vuex)
 
@@ -9,28 +10,31 @@ const createStore = () => {
     return new Vuex.Store({
         modules: {
             product,
-            repositories
+            repositories,
+            tools
         },
         mutations: {
             HANDLE_PRODUCT_NAME(state, payload) {
                 state.product.name = payload
             },
             HANDLE_PRODUCT_CATEGORY(state, payload) {
+                // const word = payload
+                // const capitalized = word.charAt(0).toUpperCase() + word.slice(1)
                 state.product.category = payload
             },
             HANDLE_PRODUCT_DESCRIPTION(state, payload) {
                 state.product.description = payload
             },
             HANDLE_PRODUCT_PRICE(state, payload) {
-                state.product.price = payload
+                state.product.price =  parseFloat(payload)
                 state.product.finalPrice = Number(state.product.price) + Number((state.product.price * (state.product.profit / 100)))
             },
             HANDLE_PRODUCT_PROFIT(state, payload) {
-                state.product.profit = payload
+                state.product.profit =  parseFloat(payload)
                 state.product.finalPrice = Number(state.product.price) + Number((state.product.price * (state.product.profit / 100)))
             },
             HANDLE_PRODUCT_FINAL_PRICE(state, payload) {
-                state.product.finalPrice = payload
+                state.product.finalPrice =  parseFloat(payload)
                 state.product.profit = ((Number(state.product.finalPrice) / Number(state.product.price)) - 1) * 100;
             },
             HANDLE_PRODUCT_AVAILABILITY(state, payload) {
@@ -40,7 +44,7 @@ const createStore = () => {
                 state.product.featured = payload
             },
             HANDLE_PRODUCT_COLOR(state, payload) {
-                state.product.customAttributes.productColor = payload
+                state.product.customAttributes.color = payload
             },
             HANDLE_PRODUCT_MANUFACTURING_DATE(state, payload) {
                 state.product.customAttributes.manufacturingDate = payload
@@ -66,17 +70,30 @@ const createStore = () => {
             HANDLE_PRODUCT_WEIGHT(state, payload) {
                 state.product.dimensions.weight = payload
             },
-            HANDLE_PRODUCT_BRAND_NAME(state, payload) {
-                state.product.brand.name = payload
+            HANDLE_PRODUCT_BRAND(state, payload) {
+                state.product.brand = payload
             },
             HANDLE_PRODUCT_BRAND_UUID(state, payload) {
-                state.product.brand.uuid = payload
+                state.product.brand = payload
             },
             HANDLE_PRODUCT_TAGS(state, payload) {
                 state.product.tags = payload
             },
             HANDLE_PRODUCT_RELATED_PRODUCTS(state, payload) {
                 state.product.relatedProducts = payload
+            },
+            HANDLE_PRODUCT_IMAGES(state, payload){
+                if(payload.type === 1){
+                    state.product.images.push(payload)
+                } else {
+                    state.product.images = state.product.images.filter(image => image.uid !== payload.uid)
+                }
+            },
+            HANDLE_PRODUCT_STOCK(state, payload){
+                state.product.stock = payload
+            },
+            HANDLE_TOOLS_ALERT(state, payload){
+                state.tools.alert = payload
             }
         },
         getters: {
@@ -131,17 +148,17 @@ const createStore = () => {
             GET_PRODUCT_DEPTH(state) {
                 return state.product.dimensions.depth
             },
-            GET_PRODUCT_BRAND_NAME(state) {
-                return state.product.brand.name
-            },
-            GET_PRODUCT_BRAND_UUID(state) {
-                return state.product.brand.uuid
+            GET_PRODUCT_BRAND(state) {
+                return state.product.brand
             },
             GET_PRODUCT_TAGS(state) {
                 return state.product.tags
             },
             GET_PRODUCT_RELATED_PRODUCTS(state) {
                 return state.product.relatedProducts
+            },
+            GET_PRODUCT_STOCK(state) {
+                return state.product.stock
             },
         },
         actions: {

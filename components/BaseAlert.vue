@@ -63,6 +63,7 @@ export default {
   methods: {
     dismissAlert() {
       this.visible = false;
+      this.$emit('dismissAlert')
     }
   }
 };
