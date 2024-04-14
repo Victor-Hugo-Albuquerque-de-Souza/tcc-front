@@ -50,11 +50,6 @@ export default {
       type: String,
       description: 'Input label'
     },
-    error: {
-      type: String,
-      description: 'Input error',
-      default: ''
-    },
     value: {
       type: [String, Number],
       description: 'Input value'
@@ -66,6 +61,11 @@ export default {
     addonLeftIcon: {
       type: String,
       description: 'Input icon on the left'
+    },
+    error:{
+      type: String,
+      description:'error under the field',
+      default:""
     }
   },
   model: {
@@ -75,7 +75,7 @@ export default {
   data() {
     return {
       focused: false,
-      touched: false
+      touched: false,
     };
   },
   computed: {

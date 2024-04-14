@@ -10,33 +10,42 @@
                     <base-input
                         type="text"
                         label="Nome:"
+                        :error="$store.state.errors.product.name"
                         placeholder="ex: Modelo asadelta"
                         v-model="name"
                     >
                     </base-input>
                 </div>
                 <div class="col-md-5">
-                    <base-select
-                        label="Fabricante:"
+                    <base-search
+                        label="Fabricantee"
                         v-model="brand"
+                        dataList="productBrand"
+                        :list="$store.state.repositories.product.brands"
+                        :verificationState="$store.getters.GET_PRODUCT_BRAND"
+                        @clearState="$store.commit('HANDLE_PRODUCT_BRAND', new Object({
+                            id:'',
+                            label:''
+                        }))"
                     >
-                        <template #options>
-                            <option v-for="brand, index in $store.state.repositories.product.brands" class="hover-pointer text-capitalize" :key="index" :value="brand.id">{{ brand.label }}</option>
-                        </template>
-                    </base-select>
+                    </base-search>
                 </div>
             </div>
             <!-- 2nd ROW: CATEGORY AND STOCK-->
             <div class="row">
                 <div class="col-md-6">
-                    <base-select
-                        label="Categorias:"
+                    <base-search
+                        label="Categoria"
                         v-model="category"
+                        dataList="productCategories"
+                        :list="$store.state.repositories.product.categories"
+                        :verificationState="$store.state.product.category.id"
+                        @clearState="$store.commit('HANDLE_PRODUCT_CATEGORY', new Object({
+                            id:'',
+                            label:''
+                        }))"
                     >
-                        <template #options>
-                            <option v-for="category, index in $store.state.repositories.product.categories" class="hover-pointer text-capitalize" :key="index" :value="category.label">{{ category.label }}</option>
-                        </template>
-                    </base-select>
+                    </base-search>
                 </div>
                 <div class="col-md-6">
                     <base-input

@@ -1,7 +1,10 @@
 const initialState = {
     name:"",
     description:"",
-    category:"",
+    category:{
+        id:"",
+        label:""
+    },
     price:0,
     finalPrice:0,
     profit:0,
@@ -22,7 +25,10 @@ const initialState = {
         depth:"",
         weight:""
     },
-    brand:"",
+    brand:{
+        id:"",
+        label:""
+    },
     tags:[],
     relatedProducts:[],
     images:[]

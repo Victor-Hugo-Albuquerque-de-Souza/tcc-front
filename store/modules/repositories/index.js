@@ -4,64 +4,64 @@ const initialState = {
             {
                 id:1,
                 label:'Marca 1',
-                isSelected:false
+                value:'Marca 1'
             },
             {
                 id:2,
                 label:'Marca 2',
-                isSelected:false
+                value:'Marca 2'
             },
             {
                 id:3,
                 label:'Marca 3',
-                isSelected:false
+                value:'Marca 3'
             },
             {
                 id:4,
                 label:'Marca 4',
-                isSelected:false
+                value:'Marca 4' 
             },
             {
                 id:5,
                 label:'Marca 5',
-                isSelected:false
+                value:'Marca 5'
             },
             {
                 id:6,
                 label:'Marca 6',
-                isSelected:false
+                value:'Marca 6'
             },
         ],
         categories:[
             {
                 id:1,
                 label:'Langeries',
-                isSelected:false
+                value:'Langeries'
             },
             {
                 id:2,
                 label:'Óleos de massagem',
-                isSelected:false
+                value:'Óleos de massagem'
             },
             {
                 id:3,
                 label:'Próteses',
-                isSelected:false
+                value:'Próteses'
             },
             {
                 id:4,
                 label:'Bdsm',
-                isSelected:false
+                value:'Bdsm'
             },
             {
                 id:5,
                 label:'Cosméticos',
-                isSelected:false
+                value:'Cosméticos'
             },
             {
                 id:6,
                 label:'Jogos',
-                isSelected:false
+                value:'Jogos'
             },
         ],
         tags:[

@@ -11,10 +11,9 @@ import Badge from '~/components/Multiselect/Badge.vue';
 import BasePicture from '@/components/Inputs/BasePicture.vue';
 import Multiselect from '@/components/Multiselect/Multiselect.vue';
 import BaseAlert from '~/components/BaseAlert.vue';
+import BaseSearch from '@/components/Inputs/BaseSearch';
 import { Input, InputNumber, Tooltip, Popover } from 'element-ui';
-/**
- * You can register global components here and use them as a plugin in your main Vue instance
- */
+
 
 Vue.component(BaseInput.name, BaseInput);
 Vue.component(BaseDropdown.name, BaseDropdown);
@@ -30,5 +29,6 @@ Vue.component(BasePicture.name, BasePicture);
 Vue.component(Multiselect.name, Multiselect);
 Vue.component(Badge.name, Badge)
 Vue.component(BaseAlert.name, BaseAlert)
+Vue.component(BaseSearch.name, BaseSearch)
 Vue.use(Tooltip);
 Vue.use(Popover);

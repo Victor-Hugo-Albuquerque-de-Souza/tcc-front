@@ -3,6 +3,7 @@ import Vue from 'vue'
 import product from './modules/product/index.js'
 import repositories from './modules/repositories/index.js'
 import tools from './modules/tools/index.js'
+import errors from './modules/errors/index.js'
 
 Vue.use(Vuex)
 
@@ -11,16 +12,17 @@ const createStore = () => {
         modules: {
             product,
             repositories,
-            tools
+            tools,
+            errors
         },
         mutations: {
+            // MUTATIONS DOS PRODUCTS:=======================================================================================================================
             HANDLE_PRODUCT_NAME(state, payload) {
                 state.product.name = payload
             },
             HANDLE_PRODUCT_CATEGORY(state, payload) {
-                // const word = payload
-                // const capitalized = word.charAt(0).toUpperCase() + word.slice(1)
-                state.product.category = payload
+                state.product.category.id = payload.id
+                state.product.category.label = payload.label
             },
             HANDLE_PRODUCT_DESCRIPTION(state, payload) {
                 state.product.description = payload
@@ -71,7 +73,9 @@ const createStore = () => {
                 state.product.dimensions.weight = payload
             },
             HANDLE_PRODUCT_BRAND(state, payload) {
-                state.product.brand = payload
+                console.log('Chegou no store:', payload)
+                state.product.brand.id = payload.id
+                state.product.brand.label = payload.label
             },
             HANDLE_PRODUCT_BRAND_UUID(state, payload) {
                 state.product.brand = payload
@@ -94,14 +98,19 @@ const createStore = () => {
             },
             HANDLE_TOOLS_ALERT(state, payload){
                 state.tools.alert = payload
+            },
+            // MUTATIONS DOS ERROS:==============================================================================================================
+            HANDLE_ERRORS_PRODUCT_NAME(state, payload){
+                state.errors.product.name = payload
             }
         },
         getters: {
+            // GETTERS DOS PRODUTOS:==========================================================================================================================
             GET_PRODUCT_NAME(state) {
                 return state.product.name
             },
             GET_PRODUCT_CATEGORY(state) {
-                return state.product.category
+                return state.product.category.label
             },
             GET_PRODUCT_DESCRIPTION(state) {
                 return state.product.description
@@ -149,7 +158,7 @@ const createStore = () => {
                 return state.product.dimensions.depth
             },
             GET_PRODUCT_BRAND(state) {
-                return state.product.brand
+                return state.product.brand.label
             },
             GET_PRODUCT_TAGS(state) {
                 return state.product.tags
@@ -160,6 +169,7 @@ const createStore = () => {
             GET_PRODUCT_STOCK(state) {
                 return state.product.stock
             },
+            //GETTER DOS ERROS================================================================================================================================
         },
         actions: {
         }
