@@ -4,9 +4,8 @@ import product from './modules/product/index.js'
 import repositories from './modules/repositories/index.js'
 import tools from './modules/tools/index.js'
 import errors from './modules/errors/index.js'
-
+import api from '~/service/api.js'
 Vue.use(Vuex)
-
 const createStore = () => {
     return new Vuex.Store({
         modules: {
@@ -73,7 +72,6 @@ const createStore = () => {
                 state.product.dimensions.weight = payload
             },
             HANDLE_PRODUCT_BRAND(state, payload) {
-                console.log('Chegou no store:', payload)
                 state.product.brand.id = payload.id
                 state.product.brand.label = payload.label
             },
@@ -96,12 +94,58 @@ const createStore = () => {
             HANDLE_PRODUCT_STOCK(state, payload){
                 state.product.stock = payload
             },
-            HANDLE_TOOLS_ALERT(state, payload){
-                state.tools.alert = payload
+            CLEAR_PRODUCT_STATES(state, payload){
+                state.product.name = ""
+                state.product.brand.id = ""
+                state.product.category.id = ""
+                state.product.stock = 0
+                state.product.price = 0
+                state.product.profit = 0
+                state.product.finalPrice = 0
+                state.product.description = ""
+                state.product.customAttributes.color = ""
+                state.product.customAttributes.size = ""
+                state.product.customAttributes.manufacturingDate = ""
+                state.product.customAttributes.lotNumber = ""
+                state.product.customAttributes.volts = ""
+                state.product.dimensions.height = ""
+                state.product.dimensions.width = ""
+                state.product.dimensions.depth = ""
+                state.product.dimensions.weight = ""
+                state.product.tags = []
+                state.product.relatedProducts = []
+                state.product.images = []
+            },
+            HANDLE_RELEVANT_ENTRIES(state, payload){
+                state.repositories.product.tags = payload.tags
+                state.repositories.product.brands = payload.brands
+                state.repositories.product.relatedProducts = payload.products
             },
             // MUTATIONS DOS ERROS:==============================================================================================================
-            HANDLE_ERRORS_PRODUCT_NAME(state, payload){
-                state.errors.product.name = payload
+            HANDLE_PRODUCT_ERRORS(state, payload) {
+                if (payload.value === '' && payload.required) {
+                    state.errors.product[payload.field] =' Esse campo é necessário.'
+                } else {
+                    state.errors.product[payload.field] = ''
+                }
+            },
+            // MUTATIONS DAS TOOLS: ===========================================
+            HANDLE_TOOLS_ALERT(state, payload){
+                if(payload){
+                    state.tools.alert.hasAlert = payload.hasAlert
+                    state.tools.alert.type = payload.type
+                    state.tools.alert.header = payload.header
+                    state.tools.alert.text = payload.text
+
+                    setTimeout(() => {
+                        state.tools.alert.hasAlert = false
+                    }, 5000);
+                } else {
+                    state.tools.alert.hasAlert = false
+                    state.tools.alert.type = ""
+                    state.tools.alert.header = ""
+                    state.tools.alert.text = ""
+                }
             }
         },
         getters: {
@@ -170,10 +214,84 @@ const createStore = () => {
                 return state.product.stock
             },
             //GETTER DOS ERROS================================================================================================================================
+            VERIFY_PRODUCT_FORM(state){
+                if(state.product.name !== "" &&
+                    state.product.category.id !== "" &&
+                    state.product.price !== 0 &&
+                    state.product.finalPrice !== 0 &&
+                    state.product.brand.id !== ""){
+                        return true
+                    } else {
+                        return false
+                    }
+            }
         },
         actions: {
+            async CREATE_PRODUCT(ctx, payload){
+                if(ctx.getters.VERIFY_PRODUCT_FORM){
+                    try{
+                        const newProduct = new Object ({
+                            name: ctx.state.product.name,
+                            brand: ctx.state.product.brand.id,
+                            category: ctx.state.product.category.label,
+                            stock: ctx.state.product.stock,
+                            price: ctx.state.product.price,
+                            profit: ctx.state.product.profit,
+                            finalPrice: ctx.state.product.finalPrice,
+                            description: ctx.state.product.description,
+                            customAttributes:{
+                                color:ctx.state.product.customAttributes.color,
+                                size:ctx.state.product.customAttributes.size,
+                                manufacturingDate:ctx.state.product.customAttributes.manufacturingDate,
+                                lotNumber:ctx.state.product.customAttributes.lotNumber,
+                                volts:ctx.state.product.customAttributes.volts
+                            },
+                            dimensions:{
+                                height:ctx.state.product.dimensions.height,
+                                width:ctx.state.product.dimensions.width,
+                                depth:ctx.state.product.dimensions.depth,
+                                weight:ctx.state.product.dimensions.weight
+                            },
+                            tags:ctx.state.product.tags,
+                            relatedProducts: ctx.state.product.relatedProducts,
+                            images: ctx.state.product.images
+                        })
+                        const newProductPayload = await api.post('/api/product', newProduct)
+                        ctx.commit('HANDLE_TOOLS_ALERT', {
+                            hasAlert:true,
+                            type:'success',
+                            header: 'Tudo certo',
+                            text: 'Produto criado com sucesso!'
+                        }) 
+                        ctx.commit('CLEAR_PRODUCT_STATES')
+                        this.$router.push('/user')
+                    }catch(err){
+                        console.log(err)
+                        ctx.commit('HANDLE_TOOLS_ALERT', {
+                            hasAlert:true,
+                            type:'warning',
+                            header: 'Atenção',
+                            text: err.response.data.message
+                        }) 
+                    }
+                }else{
+                    ctx.commit('HANDLE_TOOLS_ALERT', {
+                        hasAlert:true,
+                        type:'warning',
+                        header: 'Atenção',
+                        text: 'Preencha todos os campos obrigatórios'
+                    })                    
+                }
+            },
+            async GET_ALL_RELEVANT_ENTRIES(ctx, payload){
+                try {
+                    const allEntries = await api.get('/get-all-relevant-entries')
+                    ctx.commit('HANDLE_RELEVANT_ENTRIES', allEntries.data)
+                } catch(error) {
+                    console.log(error)
+                }
+            }
         }
     })
 }
-
 export default createStore

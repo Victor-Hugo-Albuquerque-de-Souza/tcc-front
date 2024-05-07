@@ -1,5 +1,10 @@
 const initialState = {
-    alert:false
+    alert:{
+        hasAlert:false,
+        type:'success',
+        header:"",
+        text:""
+    }
 }
 
 export default {

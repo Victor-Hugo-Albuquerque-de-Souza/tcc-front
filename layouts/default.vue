@@ -86,10 +86,9 @@
     </div>
     <div class="w-0 h-0">
       <div class="position-fixed bottom-0 right-0">
-        <base-alert v-if="$store.state.tools.alert" @dismissAlert="$store.commit('HANDLE_TOOLS_ALERT', false)" type="success" dismissible>
+        <base-alert v-if="$store.state.tools.alert.hasAlert" @dismissAlert="$store.commit('HANDLE_TOOLS_ALERT', false)" :type="$store.state.tools.alert.type" dismissible>
             <span
-                ><b> Success - </b> This is a regular notification made with
-                ".alert-success"</span
+                ><b> {{ $store.state.tools.alert.header }} - </b> {{ $store.state.tools.alert.text }} </span
             >
         </base-alert>
       </div>

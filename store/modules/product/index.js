@@ -30,7 +30,6 @@ const initialState = {
         label:""
     },
     tags:[],
-    relatedProducts:[],
     images:[]
 }
 
