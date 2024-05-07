@@ -13,7 +13,10 @@
     components: {
       EditProductForm,
       UserCard
-    }
+    },
+    async asyncData({store}) {
+      await store.dispatch('GET_ALL_RELEVANT_ENTRIES')
+    },
   };
   </script>
   <style></style>
