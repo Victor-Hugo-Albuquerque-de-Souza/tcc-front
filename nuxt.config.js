@@ -46,6 +46,9 @@ export default {
       class: "", // Add `white-content` class here to enable "white" mode.
     },
   },
+  env:{
+    API_URL:process.env.API_URL
+  },
   router: {
     linkExactActiveClass: "active",
   },
