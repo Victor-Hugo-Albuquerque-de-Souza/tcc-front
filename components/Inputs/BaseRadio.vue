@@ -57,7 +57,6 @@ export default {
         return this.value;
       },
       set(value) {
-        console.log('aui')
         this.$emit('input', value);
       }
     },
