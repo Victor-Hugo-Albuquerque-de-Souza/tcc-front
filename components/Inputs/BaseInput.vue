@@ -118,7 +118,7 @@ export default {
     },
     onBlur(evt) {
       this.focused = false;
-      this.$emit('blur', evt)
+      this.$emit('blur', this.value)
     }
   }
 };

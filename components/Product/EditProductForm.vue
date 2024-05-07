@@ -9,19 +9,25 @@
                 <div class="col-md-7">
                     <base-input
                         type="text"
-                        label="Nome:"
+                        label="Nome: *"
                         :error="$store.state.errors.product.name"
                         placeholder="ex: Modelo asadelta"
                         v-model="name"
+                        @blur="$store.commit('HANDLE_PRODUCT_ERRORS', {
+                            value:name,
+                            field:'name',
+                            required:true
+                        })"
                     >
                     </base-input>
                 </div>
                 <div class="col-md-5">
                     <base-search
-                        label="Fabricantee"
+                        label="Fabricante: *"
                         v-model="brand"
                         dataList="productBrand"
                         :list="$store.state.repositories.product.brands"
+                        :error="$store.state.errors.product.brand"
                         :verificationState="$store.getters.GET_PRODUCT_BRAND"
                         @clearState="$store.commit('HANDLE_PRODUCT_BRAND', new Object({
                             id:'',
@@ -35,11 +41,12 @@
             <div class="row">
                 <div class="col-md-6">
                     <base-search
-                        label="Categoria"
+                        label="Categoria: *"
                         v-model="category"
                         dataList="productCategories"
                         :list="$store.state.repositories.product.categories"
                         :verificationState="$store.state.product.category.id"
+                        :error="$store.state.errors.product.category"
                         @clearState="$store.commit('HANDLE_PRODUCT_CATEGORY', new Object({
                             id:'',
                             label:''
@@ -50,8 +57,9 @@
                 <div class="col-md-6">
                     <base-input
                         type="number"
-                        label="Estoque:"
+                        label="Estoque: *"
                         placeholder="Quantidade"
+                        :error="$store.state.errors.product.stock"
                         v-model="stock"
                     >
                     </base-input>
@@ -64,6 +72,7 @@
                         type="number"
                         label="Preço de custo (R$):"
                         placeholder="R$"
+                        :error="$store.state.errors.product.price"
                         v-model="price"
                     >
                     </base-input>
@@ -73,6 +82,7 @@
                         type="number"
                         label="Margem de lucro (%):"
                         placeholder="%"
+                        :error="$store.state.errors.product.profit"
                         v-model="profit"
                     >
                     </base-input>
@@ -82,6 +92,7 @@
                         type="number"
                         label="Preço final (R$):"
                         placeholder="R$"
+                        :error="$store.state.errors.product.finalPrice"
                         v-model="finalPrice"
                     >
                     </base-input>
@@ -89,11 +100,13 @@
             </div>
             <!-- 4th ROW: DESCRIPTION -->
             <div class="row">
+                
                 <div class="col-md-12">
                     <base-text-area
                         type="text"
-                        label="Descrição"
+                        label="Descrição:"
                         placeholder="Descreva seu produto aqui"
+                        :error="$store.state.errors.product.description"
                         v-model="description"
                     >
                     </base-text-area>
@@ -157,6 +170,7 @@
                         type="date"
                         label="Fabricação:"
                         placeholder=""
+                        :error="$store.state.errors.product.manufacturingDate"
                         v-model="manufacturingDate"
                     >
                     </base-input>
@@ -166,6 +180,7 @@
                         type="text"
                         label="Lote:"
                         placeholder=""
+                        :error="$store.state.errors.product.lotNumber"
                         v-model="lotNumber"
                     >
                     </base-input>
@@ -173,6 +188,7 @@
                 <div class="col-md-4">
                     <base-select
                         label="Voltagem:"
+                        :error="$store.state.errors.product.volts"
                         v-model="volts"
                     >
                         <template #options>
@@ -216,6 +232,7 @@
                         type="text"
                         label="Altura (CM):"
                         placeholder="cm"
+                        :error="$store.state.errors.product.height"
                         v-model="height"
                     >
                     </base-input>
@@ -225,6 +242,7 @@
                         type="text"
                         label="Largura (CM):"
                         placeholder="cm"
+                        :error="$store.state.errors.product.width"
                         v-model="width"
                     >
                     </base-input>
@@ -234,6 +252,7 @@
                         type="text"
                         label="Profundidade (CM):"
                         placeholder="cm"
+                        :error="$store.state.errors.product.depth"
                         v-model="depth"
                     >
                     </base-input>
@@ -243,6 +262,7 @@
                         type="text"
                         label="Peso (G)"
                         placeholder="g"
+                        :error="$store.state.errors.product.weight"
                         v-model="weight"
                     >
                     </base-input>
@@ -310,8 +330,10 @@ export default {
     },
     methods: {
         updateProduct() {
-            this.$store.commit('HANDLE_TOOLS_ALERT', true)
-        // alert('Your data: ' + JSON.stringify(this.user));
+            this.$store.dispatch('CREATE_PRODUCT')
+        },
+        handleProductNameError(evt){
+            this.$store.commit('HANDLE_ERRORS_PRODUCT_NAME', evt)
         }
     },
     computed:{
@@ -348,7 +370,7 @@ export default {
         },
         price:{
             get(){
-                return this.$store.getters.GET_PRODUCT_PRICE
+                return this.$store.getters.GET_PRODUCT_PRICE.toFixed(2)
             },
             set(value){
                 this.$store.commit('HANDLE_PRODUCT_PRICE', value)
@@ -364,7 +386,7 @@ export default {
         },
         finalPrice:{
             get(){
-                return this.$store.getters.GET_PRODUCT_FINAL_PRICE
+                return this.$store.getters.GET_PRODUCT_FINAL_PRICE.toFixed(2)
             },
             set(value){
                 this.$store.commit('HANDLE_PRODUCT_FINAL_PRICE', value)
