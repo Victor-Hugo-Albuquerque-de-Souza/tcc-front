@@ -22,6 +22,7 @@
                 class="form-control w-full pl-13px h-40px !border-1px !border-solid !rounded-xl !text-13px text-black-215 mont"
                 v-model="inputValue.label"
                 v-on="listeners"
+                :disabled="disabled"
                 aria-describedby="addon-right addon-left"
             />
             <datalist
@@ -90,6 +91,10 @@ export default {
         verificationState:{
             type:[String, Number, Boolean],
             default:""
+        },
+        disabled:{
+            type:Boolean,
+            default:false
         }
     },
     model: {
@@ -167,7 +172,8 @@ export default {
             if (matchingItem) {
                 this.$emit('change', new Object({
                     id: matchingItem.id,
-                    label: matchingItem.label
+                    label: matchingItem.label,
+                    value:matchingItem.value
                 }))
             } else {
                 this.$emit('clearState')
