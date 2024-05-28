@@ -3,7 +3,13 @@ const initialState = {
     description:"",
     category:{
         id:"",
-        label:""
+        label:"",
+        value:""
+    },
+    subcategory:{
+        id:"",
+        label:"",
+        value:""
     },
     price:0,
     finalPrice:0,
@@ -15,7 +21,7 @@ const initialState = {
     customAttributes:{
         color:"",
         size:"",
-        manufacturingDate:"",
+        expirationDate:"",
         lotNumber:"",
         volts:""
     },

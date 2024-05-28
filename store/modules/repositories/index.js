@@ -1,133 +1,118 @@
 const initialState = {
     product:{
-        brands:[
-            {
-                id:1,
-                label:'Marca 1',
-                value:'Marca 1'
-            },
-            {
-                id:2,
-                label:'Marca 2',
-                value:'Marca 2'
-            },
-            {
-                id:3,
-                label:'Marca 3',
-                value:'Marca 3'
-            },
-            {
-                id:4,
-                label:'Marca 4',
-                value:'Marca 4' 
-            },
-            {
-                id:5,
-                label:'Marca 5',
-                value:'Marca 5'
-            },
-            {
-                id:6,
-                label:'Marca 6',
-                value:'Marca 6'
-            },
-        ],
+        brands:[],
         categories:[
             {
                 id:1,
-                label:'Langeries',
-                value:'Langeries'
+                label:'Sexshop',
+                value:'sexshop'
             },
             {
                 id:2,
-                label:'Óleos de massagem',
-                value:'Óleos de massagem'
+                label:'Moda Íntima',
+                value:'moda íntima'
             },
             {
                 id:3,
-                label:'Próteses',
-                value:'Próteses'
-            },
-            {
-                id:4,
-                label:'Bdsm',
-                value:'Bdsm'
+                label:'Moda Feminina',
+                value:'moda feminina'
             },
             {
                 id:5,
-                label:'Cosméticos',
-                value:'Cosméticos'
-            },
-            {
-                id:6,
-                label:'Jogos',
-                value:'Jogos'
-            },
+                label:'Maquiagem',
+                value:'maquiagem'
+            }
         ],
-        tags:[
-            {
-                id:1,
-                label:'Langeries',
-                isSelected:false
-            },
-            {
-                id:2,
-                label:'Óleos de massagem',
-                isSelected:false
-            },
-            {
-                id:3,
-                label:'Próteses',
-                isSelected:false
-            },
-            {
-                id:4,
-                label:'Bdsm',
-                isSelected:false
-            },
-            {
-                id:5,
-                label:'Cosméticos',
-                isSelected:false
-            },
-            {
-                id:6,
-                label:'Jogos',
-                isSelected:false
-            },
-        ],
-        relatedProducts:[
-            {
-                id:1,
-                label:'Langerie bordada',
-                isSelected:false
-            },
-            {
-                id:2,
-                label:'Lubrificante caro',
-                isSelected:false
-            },
-            {
-                id:3,
-                label:'Prótese peniana',
-                isSelected:false
-            },
-            {
-                id:4,
-                label:'Maquiagem íntima',
-                isSelected:false
-            },
-            {
-                id:5,
-                label:'Dados eróticos',
-                isSelected:false
-            },
-            {
-                id:6,
-                label:'Algemas de pelúcia',
-                isSelected:false
-            },
-        ],
+        subcategories:{
+            sexshop:[
+                {
+                    id:1,
+                    label:'Cosméticos',
+                    value:'cosméticos'
+                },
+                {
+                    id:2,
+                    label:'Vibradores',
+                    value:'vibradores'
+                },
+                {
+                    id:3,
+                    label:'Pênis de Borracha',
+                    value:'pênis de borracha'
+                },
+                {
+                    id:4,
+                    label:'Sexo Anal',
+                    value:'sexo anal'
+                },
+                {
+                    id:5,
+                    label:'Fantasias',
+                    value:'fantasias'
+                },
+                {
+                    id:6,
+                    label:'Moda Sensual',
+                    value:'moda sensual'
+                },
+                {
+                    id:6,
+                    label:'Acessórios',
+                    value:'acessórios'
+                },
+                {
+                    id:6,
+                    label:'Higiene e Banho',
+                    value:'higiene e banho'
+                },
+                {
+                    id:6,
+                    label:'Sado',
+                    value:'sado'
+                },
+                {
+                    id:6,
+                    label:'Brincadeiras',
+                    value:'brincadeiras'
+                },
+            ],
+            modaIntima:[],
+            modaFeminina:[],
+            maquiagem:[]
+        },
+        tags:[],
+        // relatedProducts:[
+        //     {
+        //         id:1,
+        //         label:'Langerie bordada',
+        //         isSelected:false
+        //     },
+        //     {
+        //         id:2,
+        //         label:'Lubrificante caro',
+        //         isSelected:false
+        //     },
+        //     {
+        //         id:3,
+        //         label:'Prótese peniana',
+        //         isSelected:false
+        //     },
+        //     {
+        //         id:4,
+        //         label:'Maquiagem íntima',
+        //         isSelected:false
+        //     },
+        //     {
+        //         id:5,
+        //         label:'Dados eróticos',
+        //         isSelected:false
+        //     },
+        //     {
+        //         id:6,
+        //         label:'Algemas de pelúcia',
+        //         isSelected:false
+        //     },
+        // ],
         colors:[
             {
                 id:1,

@@ -22,21 +22,27 @@ const createStore = () => {
             HANDLE_PRODUCT_CATEGORY(state, payload) {
                 state.product.category.id = payload.id
                 state.product.category.label = payload.label
+                state.product.category.value = payload.value
+            },
+            HANDLE_PRODUCT_SUBCATEGORY(state, payload) {
+                state.product.subcategory.id = payload.id
+                state.product.subcategory.label = payload.label
+                state.product.subcategory.value = payload.value
             },
             HANDLE_PRODUCT_DESCRIPTION(state, payload) {
                 state.product.description = payload
             },
             HANDLE_PRODUCT_PRICE(state, payload) {
                 state.product.price =  parseFloat(payload)
-                state.product.finalPrice = Number(state.product.price) + Number((state.product.price * (state.product.profit / 100)))
+                state.product.finalPrice = (Number(state.product.price) + Number((state.product.price * (state.product.profit / 100)))).toFixed(2)
             },
             HANDLE_PRODUCT_PROFIT(state, payload) {
                 state.product.profit =  parseFloat(payload)
-                state.product.finalPrice = Number(state.product.price) + Number((state.product.price * (state.product.profit / 100)))
+                state.product.finalPrice = (Number(state.product.price) + Number((state.product.price * (state.product.profit / 100)))).toFixed(2)
             },
             HANDLE_PRODUCT_FINAL_PRICE(state, payload) {
                 state.product.finalPrice =  parseFloat(payload)
-                state.product.profit = ((Number(state.product.finalPrice) / Number(state.product.price)) - 1) * 100;
+                state.product.profit = (((Number(state.product.finalPrice) / Number(state.product.price)) - 1) * 100).toFixed(2)
             },
             HANDLE_PRODUCT_AVAILABILITY(state, payload) {
                 state.product.availability = payload
@@ -47,8 +53,8 @@ const createStore = () => {
             HANDLE_PRODUCT_COLOR(state, payload) {
                 state.product.customAttributes.color = payload
             },
-            HANDLE_PRODUCT_MANUFACTURING_DATE(state, payload) {
-                state.product.customAttributes.manufacturingDate = payload
+            HANDLE_PRODUCT_EXPIRATION_DATE(state, payload) {
+                state.product.customAttributes.expirationDate = payload
             },
             HANDLE_PRODUCT_LOT_NUMBER(state, payload) {
                 state.product.customAttributes.lotNumber = payload
@@ -105,7 +111,7 @@ const createStore = () => {
                 state.product.description = ""
                 state.product.customAttributes.color = ""
                 state.product.customAttributes.size = ""
-                state.product.customAttributes.manufacturingDate = ""
+                state.product.customAttributes.expirationDate = ""
                 state.product.customAttributes.lotNumber = ""
                 state.product.customAttributes.volts = ""
                 state.product.dimensions.height = ""
@@ -150,68 +156,27 @@ const createStore = () => {
         },
         getters: {
             // GETTERS DOS PRODUTOS:==========================================================================================================================
-            GET_PRODUCT_NAME(state) {
-                return state.product.name
-            },
-            GET_PRODUCT_CATEGORY(state) {
-                return state.product.category.label
-            },
-            GET_PRODUCT_DESCRIPTION(state) {
-                return state.product.description
-            },
-            GET_PRODUCT_PRICE(state) {
-                return state.product.price
-            },
-            GET_PRODUCT_PROFIT(state) {
-                return state.product.profit
-            },
-            GET_PRODUCT_FINAL_PRICE(state) {
-                return state.product.finalPrice
-            },
-            GET_PRODUCT_WEIGHT(state) {
-                return state.product.dimensions.weight
-            },
-            GET_PRODUCT_AVAILABILITY(state) {
-                return state.product.availability
-            },
-            GET_PRODUCT_FEATURED(state) {
-                return state.product.featured
-            },
-            GET_PRODUCT_COLOR(state) {
-                return state.product.customAttributes.color
-            },
-            GET_PRODUCT_SIZE(state) {
-                return state.product.customAttributes.size
-            },
-            GET_PRODUCT_MANUFACTURING_DATE(state) {
-                return state.product.customAttributes.manufacturingDate
-            },
-            GET_PRODUCT_LOT_NUMBER(state) {
-                return state.product.customAttributes.lotNumber
-            },
-            GET_PRODUCT_VOLTS(state) {
-                return state.product.customAttributes.volts
-            },
-            GET_PRODUCT_HEIGHT(state) {
-                return state.product.dimensions.height
-            },
-            GET_PRODUCT_WIDTH(state) {
-                return state.product.dimensions.width
-            },
-            GET_PRODUCT_DEPTH(state) {
-                return state.product.dimensions.depth
-            },
-            GET_PRODUCT_BRAND(state) {
-                return state.product.brand.label
-            },
-            GET_PRODUCT_TAGS(state) {
-                return state.product.tags
-            },
-            GET_PRODUCT_RELATED_PRODUCTS(state) {
-                return state.product.relatedProducts
-            },
-            GET_PRODUCT_STOCK(state) {
-                return state.product.stock
+            GET_PRODUCT_SUBCATEGORIES(state){
+                switch (state.product.category.value) {
+                    case 'sexshop':{
+                        return state.repositories.product.subcategories.sexshop
+                        break;
+                    }
+                    case 'moda íntima':{
+                        return state.repositories.product.subcategories.modaIntima
+                        break;
+                    }
+                    case 'moda feminina':{
+                        return state.repositories.product.subcategories.modaFeminina
+                        break;
+                    }
+                    case 'maquaigem':{
+                        return state.repositories.product.subcategories.maquiagem
+                        break;
+                    }
+                    default:
+                        break;
+                }
             },
             //GETTER DOS ERROS================================================================================================================================
             VERIFY_PRODUCT_FORM(state){
@@ -230,49 +195,44 @@ const createStore = () => {
             async CREATE_PRODUCT(ctx, payload){
                 if(ctx.getters.VERIFY_PRODUCT_FORM){
                     try{
-                        const newProduct = new Object ({
-                            name: ctx.state.product.name,
-                            brand: ctx.state.product.brand.id,
-                            category: ctx.state.product.category.label,
-                            stock: ctx.state.product.stock,
-                            price: ctx.state.product.price,
-                            profit: ctx.state.product.profit,
-                            finalPrice: ctx.state.product.finalPrice,
-                            description: ctx.state.product.description,
-                            customAttributes:{
-                                color:ctx.state.product.customAttributes.color,
-                                size:ctx.state.product.customAttributes.size,
-                                manufacturingDate:ctx.state.product.customAttributes.manufacturingDate,
-                                lotNumber:ctx.state.product.customAttributes.lotNumber,
-                                volts:ctx.state.product.customAttributes.volts
-                            },
-                            dimensions:{
-                                height:ctx.state.product.dimensions.height,
-                                width:ctx.state.product.dimensions.width,
-                                depth:ctx.state.product.dimensions.depth,
-                                weight:ctx.state.product.dimensions.weight
-                            },
-                            tags:ctx.state.product.tags,
-                            relatedProducts: ctx.state.product.relatedProducts,
-                            images: ctx.state.product.images
-                        })
-                        const newProductPayload = await api.post('/api/product', newProduct)
+                        let formData = new FormData();
+                        formData.append('name', ctx.state.product.name);
+                        formData.append('brand', ctx.state.product.brand.id);
+                        formData.append('category', ctx.state.product.category.value);
+                        formData.append('subcategory', ctx.state.product.subcategory.value);
+                        formData.append('stock', ctx.state.product.stock);
+                        formData.append('price', ctx.state.product.price);
+                        formData.append('profit', ctx.state.product.profit);
+                        formData.append('finalPrice', ctx.state.product.finalPrice);
+                        formData.append('description', ctx.state.product.description);
+                        formData.append('customAttributes',JSON.stringify(ctx.state.product.customAttributes))
+                        formData.append('dimensions', JSON.stringify(ctx.state.product.dimensions))
+                        const tagsIds = ctx.state.product.tags.map(item => item.id)
+                        tagsIds.forEach(id => formData.append('tags', id))
+                        for(let image of ctx.state.product.images){
+                            formData.append('images', image.file);
+                        }
+                        const newProductPayload = await api.post('/product', formData, {
+                            headers: {
+                                'Content-Type': 'multipart/form-data'
+                            }
+                        });
+                        // location.reload()
                         ctx.commit('HANDLE_TOOLS_ALERT', {
                             hasAlert:true,
                             type:'success',
                             header: 'Tudo certo',
                             text: 'Produto criado com sucesso!'
-                        }) 
-                        ctx.commit('CLEAR_PRODUCT_STATES')
-                        this.$router.push('/user')
+                        });
+                        ctx.commit('CLEAR_PRODUCT_STATES');
                     }catch(err){
-                        console.log(err)
+                        console.log(err);
                         ctx.commit('HANDLE_TOOLS_ALERT', {
                             hasAlert:true,
                             type:'warning',
                             header: 'Atenção',
                             text: err.response.data.message
-                        }) 
+                        });
                     }
                 }else{
                     ctx.commit('HANDLE_TOOLS_ALERT', {
@@ -280,7 +240,7 @@ const createStore = () => {
                         type:'warning',
                         header: 'Atenção',
                         text: 'Preencha todos os campos obrigatórios'
-                    })                    
+                    });                    
                 }
             },
             async GET_ALL_RELEVANT_ENTRIES(ctx, payload){
