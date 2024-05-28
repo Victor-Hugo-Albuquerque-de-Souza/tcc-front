@@ -3,7 +3,7 @@
         <!-- TITLE: -->
         <h5 slot="header" class="title">{{ getTitle }}</h5>
         <!-- FORM: -->
-        <form @submit.prevent="updateProduct">
+        <form @submit.prevent="handleProduct">
             <!-- 1st ROW: NAME AND BRAND -->
             <div class="row">
                 <div class="col-md-7">
@@ -39,7 +39,7 @@
             </div>
             <!-- 2nd ROW: CATEGORY AND STOCK-->
             <div class="row">
-                <div class="col-md-6">
+                <div class="col-md-4">
                     <base-search
                         label="Categoria: *"
                         v-model="category"
@@ -49,12 +49,30 @@
                         :error="$store.state.errors.product.category"
                         @clearState="$store.commit('HANDLE_PRODUCT_CATEGORY', new Object({
                             id:'',
-                            label:''
+                            label:'',
+                            value:''
                         }))"
                     >
                     </base-search>
                 </div>
-                <div class="col-md-6">
+                <div class="col-md-4">
+                    <base-search
+                        label="Subcategoria: *"
+                        v-model="subcategory"
+                        dataList="productSubcategories"
+                        :list="$store.getters.GET_PRODUCT_SUBCATEGORIES"
+                        :verificationState="$store.state.product.subcategory.id"
+                        :disabled="category ? false : true"
+                        :error="$store.state.errors.product.subcategory"
+                        @clearState="$store.commit('HANDLE_PRODUCT_SUBCATEGORY', new Object({
+                            id:'',
+                            label:'',
+                            value:''
+                        }))"
+                    >
+                    </base-search>
+                </div>
+                <div class="col-md-4">
                     <base-input
                         type="number"
                         label="Estoque: *"
@@ -70,6 +88,7 @@
                 <div class="col-md-4">
                     <base-input
                         type="number"
+                        step="0.01"
                         label="Preço de custo (R$):"
                         placeholder="R$"
                         :error="$store.state.errors.product.price"
@@ -81,6 +100,7 @@
                     <base-input
                         type="number"
                         label="Margem de lucro (%):"
+                        step="0.01"
                         placeholder="%"
                         :error="$store.state.errors.product.profit"
                         v-model="profit"
@@ -90,6 +110,7 @@
                 <div class="col-md-4">
                     <base-input
                         type="number"
+                        step="0.01"
                         label="Preço final (R$):"
                         placeholder="R$"
                         :error="$store.state.errors.product.finalPrice"
@@ -163,15 +184,15 @@
                     </base-select>
                 </div>
             </div>
-            <!-- 7th ROW: CUSTOM ATTRIBUTES - MANUFACTURING DATE, LOT NUMBER AND VOLTS -->
+            <!-- 7th ROW: CUSTOM ATTRIBUTES - EXPIRATION DATE, LOT NUMBER AND VOLTS -->
             <div v-if="fieldsetControllers.customAttributes" class="row">
                 <div class="col-md-4">
                     <base-input
                         type="date"
-                        label="Fabricação:"
+                        label="Data de validade:"
                         placeholder=""
-                        :error="$store.state.errors.product.manufacturingDate"
-                        v-model="manufacturingDate"
+                        :error="$store.state.errors.product.expirationDate"
+                        v-model="expirationDate"
                     >
                     </base-input>
                 </div>
@@ -229,7 +250,7 @@
             <div v-if="fieldsetControllers.dimensions" class="row">
                 <div class="col-md-3">
                     <base-input
-                        type="text"
+                        type="number"
                         label="Altura (CM):"
                         placeholder="cm"
                         :error="$store.state.errors.product.height"
@@ -239,7 +260,7 @@
                 </div>
                 <div class="col-md-3">
                     <base-input
-                        type="text"
+                        type="number"
                         label="Largura (CM):"
                         placeholder="cm"
                         :error="$store.state.errors.product.width"
@@ -249,7 +270,7 @@
                 </div>
                 <div class="col-md-3">
                     <base-input
-                        type="text"
+                        type="number"
                         label="Profundidade (CM):"
                         placeholder="cm"
                         :error="$store.state.errors.product.depth"
@@ -259,7 +280,7 @@
                 </div>
                 <div class="col-md-3">
                     <base-input
-                        type="text"
+                        type="number"
                         label="Peso (G)"
                         placeholder="g"
                         :error="$store.state.errors.product.weight"
@@ -279,7 +300,7 @@
                 </div>
             </div>
             <!-- 11th ROW: RELATED PRODUCTS MULTISELECT -->
-            <div class="row">
+            <!-- <div class="row">
                 <div class="col-md-12">
                     <multiselect
                         label="Produtos relacionados:"
@@ -287,7 +308,7 @@
                         @sendNewValue="(value) => relatedProducs = value"
                     ></multiselect>
                 </div>
-            </div>
+            </div> -->
             <!-- 12th ROW: PICTURES -->
             <div class="row py-3 mb-22 d-flex flex-column justify-content-between">
                 <label class="col-md-12"> Imagens do Produto: </label>
@@ -329,7 +350,7 @@ export default {
         }
     },
     methods: {
-        updateProduct() {
+        handleProduct() {
             this.$store.dispatch('CREATE_PRODUCT')
         },
         handleProductNameError(evt){
@@ -346,7 +367,7 @@ export default {
         },
         name:{
             get(){
-                return this.$store.getters.GET_PRODUCT_NAME
+                return this.$store.state.product.name
             },
             set(value){
                 this.$store.commit('HANDLE_PRODUCT_NAME', value)
@@ -354,15 +375,23 @@ export default {
         },
         category:{
             get(){
-                return this.$store.getters.GET_PRODUCT_CATEGORY
+                return this.$store.state.product.category.label
             },
             set(value){
                 this.$store.commit('HANDLE_PRODUCT_CATEGORY', value)
             }
         },
+        subcategory:{
+            get(){
+                return this.$store.state.product.subcategory.label
+            },
+            set(value){
+                this.$store.commit('HANDLE_PRODUCT_SUBCATEGORY', value)
+            }
+        },
         description:{
             get(){
-                return this.$store.getters.GET_PRODUCT_DESCRIPTION
+                return this.$store.state.product.description
             },
             set(value){
                 this.$store.commit('HANDLE_PRODUCT_DESCRIPTION', value)
@@ -370,7 +399,7 @@ export default {
         },
         price:{
             get(){
-                return this.$store.getters.GET_PRODUCT_PRICE.toFixed(2)
+                return this.$store.state.product.price
             },
             set(value){
                 this.$store.commit('HANDLE_PRODUCT_PRICE', value)
@@ -378,7 +407,7 @@ export default {
         },
         profit:{
             get(){
-                return this.$store.getters.GET_PRODUCT_PROFIT
+                return this.$store.state.product.profit
             },
             set(value){
                 this.$store.commit('HANDLE_PRODUCT_PROFIT', value)
@@ -386,7 +415,7 @@ export default {
         },
         finalPrice:{
             get(){
-                return this.$store.getters.GET_PRODUCT_FINAL_PRICE.toFixed(2)
+                return this.$store.state.product.finalPrice
             },
             set(value){
                 this.$store.commit('HANDLE_PRODUCT_FINAL_PRICE', value)
@@ -394,7 +423,7 @@ export default {
         },
         weight:{
             get(){
-                return this.$store.getters.GET_PRODUCT_WEIGHT
+                return this.$store.state.product.dimensions.weight
             },
             set(value){
                 this.$store.commit('HANDLE_PRODUCT_WEIGHT', value)
@@ -402,31 +431,15 @@ export default {
         },
         stock:{
             get(){
-                return this.$store.getters.GET_PRODUCT_STOCK
+                return this.$store.state.product.stock
             },
             set(value){
                 this.$store.commit('HANDLE_PRODUCT_STOCK', value)
             }
         },
-        availability:{
-            get(){
-                return this.$store.getters.GET_PRODUCT_AVAILABILITY
-            },
-            set(value){
-                this.$store.commit('HANDLE_PRODUCT_AVAILABILITY', value)
-            }
-        },
-        featured:{
-            get(){
-                return this.$store.getters.GET_PRODUCT_FEATURED
-            },
-            set(value){
-                this.$store.commit('HANDLE_PRODUCT_FEATURED', value)
-            }
-        },
         color:{
             get(){
-                return this.$store.getters.GET_PRODUCT_COLOR
+                return this.$store.state.product.customAttributes.color
             },
             set(value){
                 this.$store.commit('HANDLE_PRODUCT_COLOR', value)
@@ -434,23 +447,23 @@ export default {
         },
         size:{
             get(){
-                return this.$store.getters.GET_PRODUCT_SIZE
+                return this.$store.state.product.customAttributes.size
             },
             set(value){
                 this.$store.commit('HANDLE_PRODUCT_SIZE', value)
             }
         },
-        manufacturingDate:{
+        expirationDate:{
             get(){
-                return this.$store.getters.GET_PRODUCT_MANUFACTURING_DATE
+                return  this.$store.state.product.customAttributes.expirationDate
             },
             set(value){
-                this.$store.commit('HANDLE_PRODUCT_MANUFACTURING_DATE', value)
+                this.$store.commit('HANDLE_PRODUCT_EXPIRATION_DATE', value)
             }
         },
         lotNumber:{
             get(){
-                return this.$store.getters.GET_PRODUCT_LOT_NUMBER
+                return this.$store.state.product.customAttributes.lotNumber
             },
             set(value){
                 this.$store.commit('HANDLE_PRODUCT_LOT_NUMBER', value)
@@ -458,7 +471,7 @@ export default {
         },
         volts:{
             get(){
-                return this.$store.getters.GET_PRODUCT_VOLTS
+                return this.$store.state.product.customAttributes.volts
             },
             set(value){
                 this.$store.commit('HANDLE_PRODUCT_VOLTS', value)
@@ -466,7 +479,7 @@ export default {
         },
         height:{
             get(){
-                return this.$store.getters.GET_PRODUCT_HEIGHT
+                return this.$store.state.product.dimensions.height
             },
             set(value){
                 this.$store.commit('HANDLE_PRODUCT_HEIGHT', value)
@@ -474,7 +487,7 @@ export default {
         },
         width:{
             get(){
-                return this.$store.getters.GET_PRODUCT_WIDTH
+                return this.$store.state.product.dimensions.width
             },
             set(value){
                 this.$store.commit('HANDLE_PRODUCT_WIDTH', value)
@@ -482,7 +495,7 @@ export default {
         },
         depth:{
             get(){
-                return this.$store.getters.GET_PRODUCT_DEPTH
+                return this.$store.state.product.dimensions.depth
             },
             set(value){
                 this.$store.commit('HANDLE_PRODUCT_DEPTH', value)
@@ -490,7 +503,7 @@ export default {
         },
         brand:{
             get(){
-                return this.$store.getters.GET_PRODUCT_BRAND
+                return this.$store.state.product.brand.label
             },
             set(value){
                 this.$store.commit('HANDLE_PRODUCT_BRAND', value)
@@ -498,21 +511,12 @@ export default {
         },
         tags:{
             get(){
-                return this.$store.getters.GET_PRODUCT_TAGS
+                return this.$store.state.product.tags
             },
             set(value){
                 this.$store.commit('HANDLE_PRODUCT_TAGS', value)
             }
-        },
-        relatedProducs:{
-            get(){
-                return this.$store.getters.GET_PRODUCT_RELATED_PRODUCTS
-            },
-            set(value){
-                this.$store.commit('HANDLE_PRODUCT_RELATED_PRODUCTS', value)
-            }
         }
-        
     }
 };
 </script>

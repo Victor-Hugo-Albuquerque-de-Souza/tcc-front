@@ -5,7 +5,7 @@
     <side-bar
       :background-color="sidebarBackground"
       short-title="pimenta"
-      title="pimenta nordestina"
+      title="pimenta"
     >
       <template slot-scope="props" slot="links">
         <sidebar-item
