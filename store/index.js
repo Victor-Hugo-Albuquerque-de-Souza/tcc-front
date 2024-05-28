@@ -135,6 +135,11 @@ const createStore = () => {
                     state.errors.product[payload.field] = ''
                 }
             },
+            CLEAR_ERROR(state, payload){
+                if(state[payload.form][payload.field] !== ''){
+                    state.errors.product[payload.field] = ''
+                }
+            },
             // MUTATIONS DAS TOOLS: ===========================================
             HANDLE_TOOLS_ALERT(state, payload){
                 if(payload){
