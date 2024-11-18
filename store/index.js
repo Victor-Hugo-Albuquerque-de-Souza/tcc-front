@@ -127,6 +127,22 @@ const createStore = () => {
                 state.repositories.product.brands = payload.brands
                 state.repositories.product.relatedProducts = payload.products
             },
+            HANDLE_PRODUCTS(state, payload){
+                state.repositories.entities.products = []
+                state.repositories.entities.products = payload
+            },
+            TRANSFORM_PRODUCTS_TO_DATA_TABLE(state, payload){
+                state.repositories.dataTable.dashboard = []
+                for(let product of payload){
+                    const newProduct = {
+                        name: product.attributes.name,
+                        profit:  `${Number(product.attributes.profit)}%`,
+                        price: `R$ ${(Number(product.attributes.price) + (((Number(product.attributes.profit)/100)*product.attributes.price))).toFixed(2)}`,
+                        stock: product.attributes.stock,
+                    }
+                    state.repositories.dataTable.dashboard.push(newProduct)
+                }
+            },
             // MUTATIONS DOS ERROS:==============================================================================================================
             HANDLE_PRODUCT_ERRORS(state, payload) {
                 if (payload.value === '' && payload.required) {
@@ -165,19 +181,15 @@ const createStore = () => {
                 switch (state.product.category.value) {
                     case 'sexshop':{
                         return state.repositories.product.subcategories.sexshop
-                        break;
                     }
                     case 'moda íntima':{
                         return state.repositories.product.subcategories.modaIntima
-                        break;
                     }
                     case 'moda feminina':{
                         return state.repositories.product.subcategories.modaFeminina
-                        break;
                     }
-                    case 'maquaigem':{
+                    case 'maquiagem':{
                         return state.repositories.product.subcategories.maquiagem
-                        break;
                     }
                     default:
                         break;
@@ -197,7 +209,7 @@ const createStore = () => {
             }
         },
         actions: {
-            async CREATE_PRODUCT(ctx, payload){
+            async CREATE_PRODUCT(ctx){
                 if(ctx.getters.VERIFY_PRODUCT_FORM){
                     try{
                         let formData = new FormData();
@@ -248,11 +260,20 @@ const createStore = () => {
                     });                    
                 }
             },
-            async GET_ALL_RELEVANT_ENTRIES(ctx, payload){
+            async GET_ALL_RELEVANT_ENTRIES(ctx){
                 try {
                     const allEntries = await api.get('/get-all-relevant-entries')
                     ctx.commit('HANDLE_RELEVANT_ENTRIES', allEntries.data)
                 } catch(error) {
+                    console.log(error)
+                }
+            },
+            async GET_ALL_PRODUCTS(ctx) {
+                try{
+                    const allProducts = await api.get('/products')
+                    ctx.commit('HANDLE_PRODUCTS', allProducts.data.data)
+                    ctx.commit('TRANSFORM_PRODUCTS_TO_DATA_TABLE', allProducts.data.data)
+                }catch(error){
                     console.log(error)
                 }
             }

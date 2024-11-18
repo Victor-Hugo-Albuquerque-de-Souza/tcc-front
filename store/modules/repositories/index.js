@@ -1,26 +1,32 @@
 const initialState = {
+    entities:{
+        products:[]
+    },
+    dataTable:{
+        dashboard:[]
+    },
     product:{
         brands:[],
         categories:[
             {
                 id:1,
-                label:'Sexshop',
-                value:'sexshop'
-            },
-            {
-                id:2,
                 label:'Moda Íntima',
                 value:'moda íntima'
             },
             {
-                id:3,
+                id:2,
                 label:'Moda Feminina',
                 value:'moda feminina'
             },
             {
-                id:5,
+                id:3,
                 label:'Maquiagem',
                 value:'maquiagem'
+            },
+            {
+                id:4,
+                label:'Sexshop',
+                value:'sexshop'
             }
         ],
         subcategories:{
@@ -29,21 +35,6 @@ const initialState = {
                     id:1,
                     label:'Cosméticos',
                     value:'cosméticos'
-                },
-                {
-                    id:2,
-                    label:'Vibradores',
-                    value:'vibradores'
-                },
-                {
-                    id:3,
-                    label:'Pênis de Borracha',
-                    value:'pênis de borracha'
-                },
-                {
-                    id:4,
-                    label:'Sexo Anal',
-                    value:'sexo anal'
                 },
                 {
                     id:5,
@@ -67,52 +58,63 @@ const initialState = {
                 },
                 {
                     id:6,
-                    label:'Sado',
-                    value:'sado'
-                },
-                {
-                    id:6,
                     label:'Brincadeiras',
                     value:'brincadeiras'
                 },
             ],
-            modaIntima:[],
-            modaFeminina:[],
-            maquiagem:[]
+            modaIntima:[
+                {
+                    id: 1,
+                    label: 'Sutiãs',
+                    value: 'sutiãs',
+                },
+                {
+                    id: 2,
+                    label: 'Calcinhas',
+                    value: 'calcinhas',
+                },
+                {
+                    id: 3,
+                    label: 'Corpetes',
+                    value: 'corpetes',
+                },
+            ],
+            modaFeminina:[
+                {
+                    id: 1,
+                    label: 'Vestidos',
+                    value: 'vestidos',
+                },
+                {
+                    id: 2,
+                    label: 'Blusas',
+                    value: 'blusas',
+                },
+                {
+                    id: 3,
+                    label: 'Saia e Calças',
+                    value: 'saia-e-calças',
+                },
+            ],
+            maquiagem:[
+                {
+                    id: 1,
+                    label: 'Base e Corretivo',
+                    value: 'base-e-corretivo',
+                },
+                {
+                    id: 2,
+                    label: 'Batom',
+                    value: 'batom',
+                },
+                {
+                    id: 3,
+                    label: 'Sombras',
+                    value: 'sombras',
+                },
+            ]
         },
         tags:[],
-        // relatedProducts:[
-        //     {
-        //         id:1,
-        //         label:'Langerie bordada',
-        //         isSelected:false
-        //     },
-        //     {
-        //         id:2,
-        //         label:'Lubrificante caro',
-        //         isSelected:false
-        //     },
-        //     {
-        //         id:3,
-        //         label:'Prótese peniana',
-        //         isSelected:false
-        //     },
-        //     {
-        //         id:4,
-        //         label:'Maquiagem íntima',
-        //         isSelected:false
-        //     },
-        //     {
-        //         id:5,
-        //         label:'Dados eróticos',
-        //         isSelected:false
-        //     },
-        //     {
-        //         id:6,
-        //         label:'Algemas de pelúcia',
-        //         isSelected:false
-        //     },
-        // ],
         colors:[
             {
                 id:1,

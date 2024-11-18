@@ -4,8 +4,8 @@
     <!-- COMPONENTE DE COLUNA DO DASHBOARD: -->
     <side-bar
       :background-color="sidebarBackground"
-      short-title="pimenta"
-      title="pimenta"
+      short-title="TCC"
+      title="TCC"
     >
       <template slot-scope="props" slot="links">
         <sidebar-item
@@ -16,53 +16,19 @@
           }"
         >
         </sidebar-item>
-        <sidebar-item
+        <!-- <sidebar-item
           :link="{
             name: $t('sidebar.userProfile'),
             icon: 'tim-icons icon-single-02',
             path: '/user' }"
         >
-        </sidebar-item>
+        </sidebar-item> -->
         <sidebar-item
           :link="{
             name: 'produtos',
             icon: 'tim-icons icon-tag',
             path: '/produtos' }"
         >
-          <!-- <svg
-            slot="svgIcon"
-            fill="#fff"
-            xmlns="http://www.w3.org/2000/svg"
-            width="34"
-            height="30"
-            viewBox="0 0 100 100"
-            xml:space="preserve"
-            class="mr-2"
-          >
-              <g>
-              <g>
-                <path d="M22,66h5c1.1,0,2-0.9,2-2V33c0-1.1-0.9-2-2-2h-5c-1.1,0-2,0.9-2,2v31C20,65.1,20.9,66,22,66z"/>
-              </g>
-              <g>
-                <path d="M78,31h-5c-1.1,0-2,0.9-2,2v31c0,1.1,0.9,2,2,2h5c1.1,0,2-0.9,2-2V33C80,31.9,79.1,31,78,31z"/>
-              </g>
-              <g>
-                <path d="M53,66c1.1,0,2-0.9,2-2V33c0-1.1-0.9-2-2-2h-6c-1.1,0-2,0.9-2,2v31c0,1.1,0.9,2,2,2H53z"/>
-              </g>
-              <g>
-                <path d="M65,66c1.1,0,2-0.9,2-2V33c0-1.1-0.9-2-2-2h-2c-1.1,0-2,0.9-2,2v31c0,1.1,0.9,2,2,2H65z"/>
-              </g>
-              <g>
-                <path d="M39,66c1.1,0,2-0.9,2-2V33c0-1.1-0.9-2-2-2h-2c-1.1,0-2,0.9-2,2v31c0,1.1,0.9,2,2,2H39z"/>
-              </g>
-              <g>
-                <path d="M78,72H22c-1.1,0-2,0.9-2,2v2c0,1.1,0.9,2,2,2h56c1.1,0,2-0.9,2-2v-2C80,72.9,79.1,72,78,72z"/>
-              </g>
-              <g>
-                <path d="M78,20H22c-1.1,0-2,0.9-2,2v2c0,1.1,0.9,2,2,2h56c1.1,0,2-0.9,2-2v-2C80,20.9,79.1,20,78,20z"/>
-              </g>
-            </g>
-          </svg> -->
         </sidebar-item>
       </template>
     </side-bar>
