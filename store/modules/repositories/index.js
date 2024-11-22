@@ -37,29 +37,64 @@ const initialState = {
                     value:'cosméticos'
                 },
                 {
-                    id:5,
+                    id:2,
                     label:'Fantasias',
                     value:'fantasias'
                 },
                 {
-                    id:6,
+                    id:3,
                     label:'Moda Sensual',
                     value:'moda sensual'
                 },
                 {
-                    id:6,
+                    id:4,
                     label:'Acessórios',
                     value:'acessórios'
                 },
                 {
-                    id:6,
+                    id:5,
                     label:'Higiene e Banho',
                     value:'higiene e banho'
                 },
                 {
                     id:6,
+                    label:'Sado',
+                    value:'sado'
+                },
+                {
+                    id:7,
                     label:'Brincadeiras',
                     value:'brincadeiras'
+                },
+                {
+                    id:8,
+                    label:'Sutiãs',
+                    value:'sutiãs'
+                },
+                {
+                    id:9,
+                    label:'Calcinhas',
+                    value:'calcinhas'
+                },
+                {
+                    id:10,
+                    label:'Corpetes',
+                    value:'corpetes'
+                },
+                {
+                    id:11,
+                    label:'Vestidos',
+                    value:'vestidos'
+                },
+                {
+                    id:12,
+                    label:'Blusas',
+                    value:'blusas'
+                },
+                {
+                    id:13,
+                    label:'Saia e Calças',
+                    value:'saia e calças'
                 },
             ],
             modaIntima:[

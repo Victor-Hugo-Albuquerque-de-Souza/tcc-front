@@ -160,6 +160,11 @@ export default {
                 this.items = this.initialCollection
             }
         }
+    },
+    mounted(){
+        if(this.$store.state.product.tags.length){
+            this.badges = this.$store.state.product.tags
+        }
     }
 };
 </script>

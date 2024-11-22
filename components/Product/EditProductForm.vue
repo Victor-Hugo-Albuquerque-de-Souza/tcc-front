@@ -1,7 +1,12 @@
 <template>
     <card>
         <!-- TITLE: -->
-        <h5 slot="header" class="title">{{ getTitle }}</h5>
+         <div class="w-100 d-flex justify-content-between">
+             <h5 slot="header" class="title">{{ getTitle }}</h5>
+             <svg v-if="type === 'edit'" @click="$emit('closeModal')" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M6 18 18 6M6 6l12 12" />
+            </svg>
+         </div>
         <!-- FORM: -->
         <form @submit.prevent="handleProduct">
             <!-- 1st ROW: NAME AND BRAND -->
@@ -134,7 +139,7 @@
                 </div>
             </div>
             <!-- 5th ROW: RADIO BUTTONS - HAS CUSTOM ATTRIBUTES CONTROLLER -->
-            <div class="row py-3">
+            <!-- <div class="row py-3">
                 <div class="row col-md-12">
                     <span class="col-md-12"> Tem atributos personalizáveis?</span>
                 </div>
@@ -143,7 +148,7 @@
                         <base-radio
                             groupName="hasCustomAttributes"
                             name="yes"
-                            :value="true"
+                            :value="fieldsetControllers.customAttributes"
                             label="Sim"
                             @input="(value) => fieldsetControllers.customAttributes = value"
                         >
@@ -153,16 +158,16 @@
                         <base-radio
                             groupName="hasCustomAttributes"
                             name="no"
-                            :value="false"
+                            :value="fieldsetControllers.customAttributes"
                             label="Não"
                             @input="(value) => fieldsetControllers.customAttributes = value"
                         >
                         </base-radio>
                     </div>
                 </div>
-            </div>
+            </div> -->
             <!-- 6th ROW: CUSTOM ATTRIBUTES - COLORS AND SIZE-->
-            <div v-if="fieldsetControllers.customAttributes" class="row">
+            <!-- <div class="row">
                 <div class="col-md-6">
                     <base-select
                         label="Cor predominante:"
@@ -183,9 +188,9 @@
                         </template>
                     </base-select>
                 </div>
-            </div>
+            </div> -->
             <!-- 7th ROW: CUSTOM ATTRIBUTES - EXPIRATION DATE, LOT NUMBER AND VOLTS -->
-            <div v-if="fieldsetControllers.customAttributes" class="row">
+            <div class="row py-3">
                 <div class="col-md-4">
                     <base-input
                         type="date"
@@ -219,7 +224,7 @@
                 </div>
             </div>
             <!-- 8th ROW: RADIO BUTTONS - HAS DIMENSIONS CONTROLLER -->
-            <div class="row py-3">
+            <!-- <div class="row py-3">
                 <div class="row col-md-12">
                     <span class="col-md-12"> Adicionar dimensões?</span>
                 </div>
@@ -245,9 +250,9 @@
                         </base-radio>
                     </div>
                 </div>
-            </div>
+            </div> -->
             <!-- 9th ROW: DIMENSIONS - HEIGHT, WIDTH AND DEPTH -->
-            <div v-if="fieldsetControllers.dimensions" class="row">
+            <div class="row py-3">
                 <div class="col-md-3">
                     <base-input
                         type="number"
@@ -314,21 +319,21 @@
                 <label class="col-md-12"> Imagens do Produto: </label>
                 <div class="pictures-container">
                     <div class="picture-unit-container">
-                        <base-picture/>
+                        <base-picture :order="0"/>
                     </div>
                     <div class="picture-unit-container">
-                        <base-picture/>
+                        <base-picture  :order="1"/>
                     </div>
                     <div class="picture-unit-container">
-                        <base-picture/>
+                        <base-picture  :order="2"/>
                     </div>
                     <div class="picture-unit-container">
-                        <base-picture/>
+                        <base-picture  :order="3"/>
                     </div>
                 </div>
             </div>
             <base-button native-type="submit" type="primary" class="btn-fill">
-                Save
+                Salvar
             </base-button>
         </form>
     </card>
@@ -347,11 +352,20 @@ export default {
         type:{
             type:String,
             default:"create"
+        },
+        id: {
+            type: [String, Number],
+            default: ''
         }
     },
     methods: {
-        handleProduct() {
-            this.$store.dispatch('CREATE_PRODUCT')
+        async handleProduct() {
+            if(this.type === 'create'){
+                this.$store.dispatch('CREATE_PRODUCT')
+            } else if (this.type === 'edit'){
+                await this.$store.dispatch('EDIT_PRODUCT', this.id)
+                this.$emit('closeModal')
+            }
         },
         handleProductNameError(evt){
             this.$store.commit('HANDLE_ERRORS_PRODUCT_NAME', evt)

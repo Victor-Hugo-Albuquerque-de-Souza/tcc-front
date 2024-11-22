@@ -19,7 +19,6 @@ const initialState = {
     featured:false,
     stock:0,
     customAttributes:{
-        color:"",
         size:"",
         expirationDate:"",
         lotNumber:"",

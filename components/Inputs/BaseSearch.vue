@@ -47,6 +47,7 @@
     </div>
 </template>
 <script>
+import { mapState } from 'vuex';
 export default {
     inheritAttrs: false,
     name: 'base-search',
@@ -143,7 +144,12 @@ export default {
             blur: this.onBlur,
             focus: this.onFocus
             };
-        }
+        },
+        ...mapState({
+            categoryLabel: state => state.product.category.label,
+            brandLabel: state => state.product.brand.label,
+            subCategoryLabel: state => state.product.subcategory.label
+        }),
     },
     methods: {
         onInput(evt) {
@@ -187,7 +193,34 @@ export default {
             } else {
                 this.touched = false
             }
-        }
+        },
+        categoryLabel: {
+            immediate: true,
+            handler() {
+                if(this.dataList === 'productCategories') {
+                    this.inputValue.label = this.$store.state.product.category.label
+                    this.inputValue.id = this.$store.state.product.category.id
+                }
+            }
+        },
+        brandLabel:{
+            immediate: true,
+            handler(){
+                if(this.dataList === 'productBrand') {
+                    this.inputValue.label = this.$store.state.product.brand.label
+                    this.inputValue.id = this.$store.state.product.brand.id
+                }
+            }
+        },
+        subCategoryLabel: {
+            immediate: true,
+            handler() {
+                if(this.dataList === 'productSubcategories') {
+                    this.inputValue.label = this.$store.state.product.subcategory.label
+                    this.inputValue.id = this.$store.state.product.subcategory.id
+                }
+            }
+        },
     }
 };
 </script>

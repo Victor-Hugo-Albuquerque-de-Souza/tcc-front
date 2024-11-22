@@ -103,13 +103,19 @@ const createStore = () => {
             CLEAR_PRODUCT_STATES(state, payload){
                 state.product.name = ""
                 state.product.brand.id = ""
+                state.product.brand.label = ""
+                state.product.brand.value = ""
                 state.product.category.id = ""
+                state.product.category.label = ""
+                state.product.category.value = ""
+                state.product.subcategory.id = ""
+                state.product.subcategory.label = ""
+                state.product.subcategory.value = ""
                 state.product.stock = 0
                 state.product.price = 0
                 state.product.profit = 0
                 state.product.finalPrice = 0
                 state.product.description = ""
-                state.product.customAttributes.color = ""
                 state.product.customAttributes.size = ""
                 state.product.customAttributes.expirationDate = ""
                 state.product.customAttributes.lotNumber = ""
@@ -138,10 +144,194 @@ const createStore = () => {
                         name: product.attributes.name,
                         profit:  `${Number(product.attributes.profit)}%`,
                         price: `R$ ${(Number(product.attributes.price) + (((Number(product.attributes.profit)/100)*product.attributes.price))).toFixed(2)}`,
+                        // profit:  `${Number(product.attributes.profit)}`,
+                        // price: `${(Number(product.attributes.price) + (((Number(product.attributes.profit)/100)*product.attributes.price))).toFixed(2)}`,
                         stock: product.attributes.stock,
+                        id: product.id
                     }
                     state.repositories.dataTable.dashboard.push(newProduct)
                 }
+            },
+            HANDLE_PRODUCT_ATTRIBUTES_BY_ID(state, payload){
+                state.product.name = payload.name
+                state.product.description = payload.description
+                switch (payload.category) {
+                    case 'moda íntima': {
+                        state.product.category = {
+                            id:1,
+                            label:'Moda Íntima',
+                            value:'moda íntima'
+                        }
+                        break;
+                    }
+                    case 'moda feminina': {
+                        state.product.category = {
+                            id:2,
+                            label:'Moda Feminina',
+                            value:'moda feminina'
+                        }
+                        break;
+                    }
+                    case 'maquiagem': {
+                        state.product.category = {
+                            id:3,
+                            label:'Maquiagem',
+                            value:'maquiagem'
+                        }
+                        break;
+                    }
+                    case 'sexshop': {
+                        state.product.category = {
+                            id:4,
+                            label:'Sexshop',
+                            value:'sexshop'
+                        }
+                        break;
+                    }
+            
+                    default:
+                        break;
+                }
+                switch (payload.subcategory) {
+                    case 'cosméticos': {
+                        state.product.subcategory = {
+                            id:1,
+                            label:'Cosméticos',
+                            value:'cosméticos'
+                        }
+                        break;
+                    }
+                    case 'fantasias': {
+                        state.product.subcategory = {
+                            id:2,
+                            label:'Fantasias',
+                            value:'fantasias'
+                        }
+                        break;
+                    }
+                    case 'moda sensual': {
+                        state.product.subcategory = {
+                            id:3,
+                            label:'Moda Sensual',
+                            value:'moda sensual'
+                        }
+                        break;
+                    }
+                    case 'acessórios': {
+                        state.product.subcategory = {
+                            id:4,
+                            label:'Acessórios',
+                            value:'acessórios'
+                        }
+                        break;
+                    }
+                    case 'brincadeiras': {
+                        state.product.subcategory = {
+                            id:4,
+                            label:'Brincadeiras',
+                            value:'brincadeiras'
+                        }
+                        break;
+                    }
+                    case 'higiene e banho': {
+                        state.product.subcategory = {
+                            id:4,
+                            label:'Higiene e Banho',
+                            value:'higiene e banho'
+                        }
+                        break;
+                    }
+                    case 'sado': {
+                        state.product.subcategory = {
+                            id:4,
+                            label:'Sado',
+                            value:'sado'
+                        }
+                        break;
+                    }
+                    case 'brincadeiras': {
+                        state.product.subcategory = {
+                            id:4,
+                            label:'Brincadeiras',
+                            value:'brincadeiras'
+                        }
+                        break;
+                    }
+                    case 'sutiãs': {
+                        state.product.subcategory = {
+                            id:4,
+                            label:'Sutiãs',
+                            value:'sutiãs'
+                        }
+                        break;
+                    }
+                    case 'calcinhas': {
+                        state.product.subcategory = {
+                            id:4,
+                            label:'Calcinhas',
+                            value:'calcinhas'
+                        }
+                        break;
+                    }
+                    case 'corpetes': {
+                        state.product.subcategory = {
+                            id:4,
+                            label:'Corpetes',
+                            value:'corpetes'
+                        }
+                        break;
+                    }
+                    case 'vestidos': {
+                        state.product.subcategory = {
+                            id:4,
+                            label:'Vestidos',
+                            value:'vestidos'
+                        }
+                        break;
+                    }
+                    case 'blusas': {
+                        state.product.subcategory = {
+                            id:4,
+                            label:'Blusas',
+                            value:'blusas'
+                        }
+                        break;
+                    }
+                    case 'saia e calças': {
+                        state.product.subcategory = {
+                            id:4,
+                            label:'Saia e Calças',
+                            value:'saia e calças'
+                        }
+                        break;
+                    }
+            
+                    default:
+                        break;
+                }
+                state.product.price = payload.price
+                state.product.dimensions = payload.dimensions
+                state.product.customAttributes = payload.customAttributes
+                state.product.finalPrice = (Number(payload.price) + (((Number(payload.profit)/100)*payload.price))).toFixed(2)
+                state.product.profit = payload.profit
+                state.product.wheight = payload.wheight
+                state.product.stock = payload.stock
+                const brand = state.repositories.product.brands.find(item => item.label === payload.brand.name)
+                if (brand) {
+                    state.product.brand = {
+                        id: brand.id,
+                        label: brand.label
+                    }
+                }
+                state.product.tags = payload.tags.map((tag) => {
+                    return {
+                        isSelected: true,
+                        id: tag.id,
+                        label: tag.label,
+                        value: tag.label
+                    }
+                })
+                state.product.images = payload.images.locations
             },
             // MUTATIONS DOS ERROS:==============================================================================================================
             HANDLE_PRODUCT_ERRORS(state, payload) {
@@ -234,14 +424,15 @@ const createStore = () => {
                                 'Content-Type': 'multipart/form-data'
                             }
                         });
-                        // location.reload()
                         ctx.commit('HANDLE_TOOLS_ALERT', {
                             hasAlert:true,
                             type:'success',
                             header: 'Tudo certo',
                             text: 'Produto criado com sucesso!'
-                        });
-                        ctx.commit('CLEAR_PRODUCT_STATES');
+                        })
+                        setTimeout(() => {
+                            location.reload()
+                        }, 1500);
                     }catch(err){
                         console.log(err);
                         ctx.commit('HANDLE_TOOLS_ALERT', {
@@ -260,6 +451,94 @@ const createStore = () => {
                     });                    
                 }
             },
+            async EDIT_PRODUCT(ctx, payload){
+                if(ctx.getters.VERIFY_PRODUCT_FORM){
+                    try{
+                        const data = {
+                            name: ctx.state.product.name,
+                            brand: ctx.state.product.brand.id,
+                            category: ctx.state.product.category.value,
+                            subcategory: ctx.state.product.subcategory.value,
+                            stock: ctx.state.product.stock,
+                            price: ctx.state.product.price,
+                            profit: ctx.state.product.profit,
+                            finalPrice: ctx.state.product.finalPrice,
+                            description: ctx.state.product.description,
+                            customAttributes: ctx.state.product.customAttributes,
+                            dimensions: ctx.state.product.dimensions
+                        }
+                        // let formData = new FormData();
+                        // formData.append('name', ctx.state.product.name);
+                        // formData.append('brand', ctx.state.product.brand.id);
+                        // formData.append('category', ctx.state.product.category.value);
+                        // formData.append('subcategory', ctx.state.product.subcategory.value);
+                        // formData.append('stock', ctx.state.product.stock);
+                        // formData.append('price', ctx.state.product.price);
+                        // formData.append('profit', ctx.state.product.profit);
+                        // formData.append('finalPrice', ctx.state.product.finalPrice);
+                        // formData.append('description', ctx.state.product.description);
+                        // formData.append('customAttributes',JSON.stringify(ctx.state.product.customAttributes))
+                        // formData.append('dimensions', JSON.stringify(ctx.state.product.dimensions))
+                        // const tagsIds = ctx.state.product.tags.map(item => item.id)
+                        // tagsIds.forEach(id => formData.append('tags', id))
+                        // for(let image of ctx.state.product.images){
+                        //     formData.append('images', image.file);
+                        // }
+                        const productPayload = await api.put(`/products/${payload}`, {data:data})
+                        // location.reload()
+                        ctx.commit('HANDLE_TOOLS_ALERT', {
+                            hasAlert:true,
+                            type:'success',
+                            header: 'Tudo certo',
+                            text: 'Produto editado com sucesso!'
+                        });
+                        ctx.commit('CLEAR_PRODUCT_STATES');
+                    }catch(err){
+                        console.log(err);
+                        ctx.commit('HANDLE_TOOLS_ALERT', {
+                            hasAlert:true,
+                            type:'warning',
+                            header: 'Atenção',
+                            // text: err.response.data.message
+                        });
+                    }
+                }else{
+                    ctx.commit('HANDLE_TOOLS_ALERT', {
+                        hasAlert:true,
+                        type:'warning',
+                        header: 'Atenção',
+                        text: 'Preencha todos os campos obrigatórios'
+                    });                    
+                }
+            },
+            async DELETE_PRODUCT(ctx, payload){
+                try {
+                    const deletedProduct = await api.delete(`/products/${payload}`)
+                    ctx.commit('HANDLE_TOOLS_ALERT', {
+                        hasAlert:true,
+                        type:'success',
+                        header: 'Tudo certo',
+                        text: 'Produto excluído!'
+                    })
+                    return
+                } catch (err) {
+                    console.log(err)
+                    ctx.commit('HANDLE_TOOLS_ALERT', {
+                        hasAlert:true,
+                        type:'warning',
+                        header: 'Atenção',
+                        text: err.response.data.message
+                    })
+                }
+            },
+            async GET_PRODUCT_BY_ID(ctx, payload) {
+                try{
+                    const productById = await api.get(`/products/${payload}`)
+                    ctx.commit('HANDLE_PRODUCT_ATTRIBUTES_BY_ID', productById.data)
+                }catch(error){
+                    console.log(error)
+                }
+            },
             async GET_ALL_RELEVANT_ENTRIES(ctx){
                 try {
                     const allEntries = await api.get('/get-all-relevant-entries')
@@ -276,7 +555,7 @@ const createStore = () => {
                 }catch(error){
                     console.log(error)
                 }
-            }
+            },
         }
     })
 }
